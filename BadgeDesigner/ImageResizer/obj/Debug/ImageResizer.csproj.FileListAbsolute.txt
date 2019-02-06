@@ -1,0 +1,16 @@
+D:\Code\Experiments\BadgeDesigner\ImageResizer\bin\Debug\ImageResizer.dll
+D:\Code\Experiments\BadgeDesigner\ImageResizer\bin\Debug\ImageResizer.pdb
+D:\Code\Experiments\BadgeDesigner\ImageResizer\obj\Debug\ImageResizer.csprojResolveAssemblyReference.cache
+D:\Code\Experiments\BadgeDesigner\ImageResizer\obj\Debug\ImageResizer.ImageResizer.resources
+D:\Code\Experiments\BadgeDesigner\ImageResizer\obj\Debug\ImageResizer.Properties.Resources.resources
+D:\Code\Experiments\BadgeDesigner\ImageResizer\obj\Debug\ImageResizer.csproj.GenerateResource.Cache
+D:\Code\Experiments\BadgeDesigner\ImageResizer\obj\Debug\ImageResizer.dll
+D:\Code\Experiments\BadgeDesigner\ImageResizer\obj\Debug\ImageResizer.pdb
+D:\Code\Experiments\experiments\BadgeDesigner\ImageResizer\bin\Debug\ImageResizer.dll
+D:\Code\Experiments\experiments\BadgeDesigner\ImageResizer\bin\Debug\ImageResizer.pdb
+D:\Code\Experiments\experiments\BadgeDesigner\ImageResizer\obj\Debug\ImageResizer.csprojResolveAssemblyReference.cache
+D:\Code\Experiments\experiments\BadgeDesigner\ImageResizer\obj\Debug\ImageResizer.ImageResizer.resources
+D:\Code\Experiments\experiments\BadgeDesigner\ImageResizer\obj\Debug\ImageResizer.Properties.Resources.resources
+D:\Code\Experiments\experiments\BadgeDesigner\ImageResizer\obj\Debug\ImageResizer.csproj.GenerateResource.Cache
+D:\Code\Experiments\experiments\BadgeDesigner\ImageResizer\obj\Debug\ImageResizer.dll
+D:\Code\Experiments\experiments\BadgeDesigner\ImageResizer\obj\Debug\ImageResizer.pdb
