@@ -1,0 +1,9 @@
+D:\Code\Experiments\SMSSender\SMSSender\bin\Debug\SMSSender.exe.config
+D:\Code\Experiments\SMSSender\SMSSender\bin\Debug\SMSSender.exe
+D:\Code\Experiments\SMSSender\SMSSender\bin\Debug\SMSSender.pdb
+D:\Code\Experiments\SMSSender\SMSSender\obj\Debug\SMSSender.csprojResolveAssemblyReference.cache
+D:\Code\Experiments\SMSSender\SMSSender\obj\Debug\SMSSender.Form1.resources
+D:\Code\Experiments\SMSSender\SMSSender\obj\Debug\SMSSender.Properties.Resources.resources
+D:\Code\Experiments\SMSSender\SMSSender\obj\Debug\SMSSender.csproj.GenerateResource.Cache
+D:\Code\Experiments\SMSSender\SMSSender\obj\Debug\SMSSender.exe
+D:\Code\Experiments\SMSSender\SMSSender\obj\Debug\SMSSender.pdb

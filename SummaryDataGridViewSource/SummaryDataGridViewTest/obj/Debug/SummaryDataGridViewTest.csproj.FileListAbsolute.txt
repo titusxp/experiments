@@ -1,0 +1,11 @@
+D:\Code\Experiments\SummaryDataGridViewSource\SummaryDataGridViewTest\bin\Debug\SummaryDataGridViewTest.exe.config
+D:\Code\Experiments\SummaryDataGridViewSource\SummaryDataGridViewTest\bin\Debug\SummaryDataGridViewTest.exe
+D:\Code\Experiments\SummaryDataGridViewSource\SummaryDataGridViewTest\bin\Debug\SummaryDataGridViewTest.pdb
+D:\Code\Experiments\SummaryDataGridViewSource\SummaryDataGridViewTest\bin\Debug\SummaryDataGridView.dll
+D:\Code\Experiments\SummaryDataGridViewSource\SummaryDataGridViewTest\bin\Debug\SummaryDataGridView.pdb
+D:\Code\Experiments\SummaryDataGridViewSource\SummaryDataGridViewTest\obj\Debug\SummaryDataGridViewTest.csprojResolveAssemblyReference.cache
+D:\Code\Experiments\SummaryDataGridViewSource\SummaryDataGridViewTest\obj\Debug\SummaryDataGridViewTest.FM_Main.resources
+D:\Code\Experiments\SummaryDataGridViewSource\SummaryDataGridViewTest\obj\Debug\SummaryDataGridViewTest.Properties.Resources.resources
+D:\Code\Experiments\SummaryDataGridViewSource\SummaryDataGridViewTest\obj\Debug\SummaryDataGridViewTest.csproj.GenerateResource.Cache
+D:\Code\Experiments\SummaryDataGridViewSource\SummaryDataGridViewTest\obj\Debug\SummaryDataGridViewTest.exe
+D:\Code\Experiments\SummaryDataGridViewSource\SummaryDataGridViewTest\obj\Debug\SummaryDataGridViewTest.pdb
