@@ -20,7 +20,7 @@ namespace BadgeDesigner
 
         private void PaintBoard_Load(object sender, EventArgs e)
         {
-            this.OriginalImage = this.pictureBox1.Image;
+            this.OriginalImage = this.pictureBox_Badge.Image;
             var paintItems = GetPaintItems();
             //var dpItem = paintItems.FirstOrDefault(i => i.PaintedItemType == PaintedItemTypes.ProfilePicture) as ProfilePicturePaintItem;
             //if (dpItem == null)
@@ -71,7 +71,7 @@ namespace BadgeDesigner
                         //var stringLength = item.ItemValue.Length;
                         //var totalSize = characterSize * stringLength / 2;
                         var textSize = GetTextSize(item.ItemValue, item.FontStyle);
-                        var imageWidthInPixels = this.pictureBox1.Image.Width;
+                        var imageWidthInPixels = this.pictureBox_Badge.Image.Width;
                         var x = 2 + (imageWidthInPixels - textSize.Width) / 2;
                         location.X = (int)x;
                         graphics.DrawString(item.ItemValue, item.FontStyle, new SolidBrush(item.FontColor),
@@ -83,7 +83,7 @@ namespace BadgeDesigner
                         graphics.DrawImage(this.DPPaintItem.ProfilePicture, this.DPPaintItem.X, this.DPPaintItem.Y, this.DPPaintItem.Width, this.DPPaintItem.Height);
                     }
                 }
-                this.pictureBox1.Image = bitmap;
+                this.pictureBox_Badge.Image = bitmap;
             }
             catch (Exception ex)
             {
@@ -116,6 +116,8 @@ namespace BadgeDesigner
                 var dpItem = database?.ProfilePictureItem;
                 dpItem?.UnArchiveImage();
                 this.DPPaintItem = dpItem;
+                this.numericUpDown_BadgeHeight.Value = database.BadgeHeight > 1 ? database.BadgeHeight : this.pictureBox_Badge.Height;
+                this.numericUpDown_BadgeWidth.Value = database.BadgeWidth > 1 ? database.BadgeWidth : this.pictureBox_Badge.Width;
                 return database?.PaintItems ?? Functions.PaintItems;
             }
             catch (Exception ex)
@@ -131,7 +133,7 @@ namespace BadgeDesigner
 
         private void button2_Click(object sender, EventArgs e)
         {
-            this.pictureBox1.Image = OriginalImage;
+            this.pictureBox_Badge.Image = OriginalImage;
         }
 
         private void button_SaveChanges_Click(object sender, EventArgs e)
@@ -147,7 +149,9 @@ namespace BadgeDesigner
             var database = new Database()
             {
                 PaintItems = paintItems,
-                ProfilePictureItem = dpItem
+                ProfilePictureItem = dpItem,
+                BadgeWidth = (int)this.numericUpDown_BadgeWidth.Value,
+                BadgeHeight = (int)this.numericUpDown_BadgeHeight.Value,
             };
             var serialized = JsonConvert.SerializeObject(database);
             File.WriteAllText(this.databasePath, serialized);
@@ -192,6 +196,12 @@ namespace BadgeDesigner
 
         private void button_PrintBadge_Click(object sender, EventArgs e)
         {
+            if(flowLayoutPanel_PrintList.Controls.Count < 1)
+            {
+                MessageBox.Show("There is no image in the print list");
+                return;
+            }
+
             var document = new PrintDocument();
             var printDialog = new PrintDialog();
 
@@ -204,12 +214,79 @@ namespace BadgeDesigner
             }
         }
 
+        private int BadgeWidth => (int)this.numericUpDown_BadgeWidth.Value;
+        private int BadgeHeight => (int)this.numericUpDown_BadgeHeight.Value;
+
         private void document_PrintPage(object sender, PrintPageEventArgs e)
         {
-            var image = new Bitmap(this.pictureBox1.Width, this.pictureBox1.Height);
-            pictureBox1.DrawToBitmap(image, new Rectangle(0,0,pictureBox1.Width, pictureBox1.Height));
-            e.Graphics.DrawImage(image, 0,0);
-            image.Dispose();
+            var images = flowLayoutPanel_PrintList.Controls.Cast<Button>()
+                .Select(l => l.BackgroundImage)
+                .Take(4);
+            var i = 0;
+            foreach(var img in images)
+            {
+                var width = this.BadgeWidth;
+                var height = this.BadgeHeight;
+                var tolerance = 20;
+                i++;
+                var x = 0;
+                var y = 0;
+                switch (i)
+                {
+                    case 1:
+                        x = 0;
+                        y = 0;
+                        break;
+                    case 2:
+                        x = width + tolerance;
+                        y = 0;
+                        break;
+                    case 3:
+                        x = 0;
+                        y = height + tolerance;
+                        break;
+                    case 4:
+                        x = width + tolerance;
+                        y = height + tolerance;
+                        break;
+                }
+                var newImage = new Bitmap(img, width, height);
+                e.Graphics.DrawImage(newImage, x, y);
+                newImage.Dispose();
+            }
+        }
+
+        private void button_AddToPrintList_Click(object sender, EventArgs e)
+        {
+            if(this.flowLayoutPanel_PrintList.Controls.Count == 4)
+            {
+                MessageBox.Show("There are already 4 images in the list. To add a new one you have to remove an existing item from the list");
+                return;
+            }
+            var currentImage = pictureBox_Badge.Image;
+            var label = new Button
+            {
+                AutoSize = false,
+                Width = 100,
+                Height = 160,
+                BackgroundImage = currentImage,
+                BackgroundImageLayout = ImageLayout.Stretch,
+            };
+            label.Click += (s, ev) =>
+            {
+                var clidkedLabel = s as Button;
+                if (clidkedLabel == null) return;
+                if(MessageBox.Show("Do you want to remove this image from the print paper?") == DialogResult.Yes)
+                {
+                    flowLayoutPanel_PrintList.Controls.Remove(clidkedLabel);
+                }
+            };
+            flowLayoutPanel_PrintList.Controls.Add(label);
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            this.flowLayoutPanel_PrintList.Controls.Clear();
         }
     }
 }

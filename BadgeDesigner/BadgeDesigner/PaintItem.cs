@@ -91,6 +91,8 @@ namespace BadgeDesigner
         private ProfilePicturePaintItem _profilePictureItem;
         public List<PaintItem> PaintItems { get; set; }
 
+        public int BadgeWidth { get; set; }
+        public int BadgeHeight { get; set; }
         public ProfilePicturePaintItem ProfilePictureItem
         {
             get { return _profilePictureItem; }
