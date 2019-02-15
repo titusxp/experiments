@@ -32,7 +32,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.paintItemBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.label_FontName = new System.Windows.Forms.Label();
@@ -46,17 +45,19 @@
             this.label14 = new System.Windows.Forms.Label();
             this.fontDialog1 = new System.Windows.Forms.FontDialog();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
+            this.paintItemBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.button_Delete = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.paintItemBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Y)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_X)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.paintItemBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(6, 46);
+            this.label1.Location = new System.Drawing.Point(6, 47);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(14, 15);
             this.label1.TabIndex = 0;
@@ -68,6 +69,7 @@
             // 
             this.groupBox1.Controls.Add(this.comboBox1);
             this.groupBox1.Controls.Add(this.button2);
+            this.groupBox1.Controls.Add(this.button_Delete);
             this.groupBox1.Controls.Add(this.button1);
             this.groupBox1.Controls.Add(this.label_FontName);
             this.groupBox1.Controls.Add(this.label_Size);
@@ -100,15 +102,11 @@
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Location = new System.Drawing.Point(6, 18);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(627, 21);
+            this.comboBox1.Size = new System.Drawing.Size(598, 21);
             this.comboBox1.TabIndex = 5;
             this.comboBox1.SelectedValueChanged += new System.EventHandler(this.comboBox1_TextChanged);
             this.comboBox1.TextChanged += new System.EventHandler(this.comboBox1_TextChanged);
             this.comboBox1.KeyUp += new System.Windows.Forms.KeyEventHandler(this.comboBox1_KeyUp);
-            // 
-            // paintItemBindingSource
-            // 
-            this.paintItemBindingSource.DataSource = typeof(BadgeDesigner.PaintItem);
             // 
             // button2
             // 
@@ -217,7 +215,7 @@
             // 
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.Location = new System.Drawing.Point(101, 46);
+            this.label13.Location = new System.Drawing.Point(101, 47);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(13, 15);
             this.label13.TabIndex = 0;
@@ -240,6 +238,21 @@
             this.fontDialog1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, ((byte)(0)));
             this.fontDialog1.FontMustExist = true;
             // 
+            // paintItemBindingSource
+            // 
+            this.paintItemBindingSource.DataSource = typeof(BadgeDesigner.PaintItem);
+            // 
+            // button_Delete
+            // 
+            this.button_Delete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_Delete.Image = global::BadgeDesigner.Properties.Resources.delete;
+            this.button_Delete.Location = new System.Drawing.Point(604, 17);
+            this.button_Delete.Name = "button_Delete";
+            this.button_Delete.Size = new System.Drawing.Size(30, 23);
+            this.button_Delete.TabIndex = 4;
+            this.button_Delete.UseVisualStyleBackColor = true;
+            this.button_Delete.Click += new System.EventHandler(this.button_Delete_Click);
+            // 
             // UcPaintItem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -250,9 +263,9 @@
             this.Size = new System.Drawing.Size(637, 73);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.paintItemBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Y)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_X)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.paintItemBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -275,6 +288,7 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label label_Size;
+        private System.Windows.Forms.Button button_Delete;
     }
 }
 

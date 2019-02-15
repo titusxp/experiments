@@ -36,6 +36,7 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button_SaveChanges = new System.Windows.Forms.Button();
             this.pictureBox_DP = new System.Windows.Forms.PictureBox();
+            this.profilePicturePaintItemBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.button_Browse = new System.Windows.Forms.Button();
             this.numericUpDown_X = new System.Windows.Forms.NumericUpDown();
             this.numericUpDown_Y = new System.Windows.Forms.NumericUpDown();
@@ -51,20 +52,20 @@
             this.flowLayoutPanel_PrintList = new System.Windows.Forms.FlowLayoutPanel();
             this.button_AddToPrintList = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
-            this.profilePicturePaintItemBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.numericUpDown_BadgeHeight = new System.Windows.Forms.NumericUpDown();
             this.numericUpDown_BadgeWidth = new System.Windows.Forms.NumericUpDown();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
+            this.button_NewItem = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Badge)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_DP)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.profilePicturePaintItemBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_X)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Y)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Width)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Height)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.profilePicturePaintItemBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_BadgeHeight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_BadgeWidth)).BeginInit();
             this.SuspendLayout();
@@ -88,9 +89,9 @@
             this.flowLayoutPanel1.AutoScroll = true;
             this.flowLayoutPanel1.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.flowLayoutPanel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(423, 1);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(423, 25);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(748, 388);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(748, 370);
             this.flowLayoutPanel1.TabIndex = 1;
             // 
             // button_Apply
@@ -140,6 +141,10 @@
             this.pictureBox_DP.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox_DP.TabIndex = 3;
             this.pictureBox_DP.TabStop = false;
+            // 
+            // profilePicturePaintItemBindingSource
+            // 
+            this.profilePicturePaintItemBindingSource.DataSource = typeof(BadgeDesigner.ProfilePicturePaintItem);
             // 
             // button_Browse
             // 
@@ -319,10 +324,6 @@
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
-            // profilePicturePaintItemBindingSource
-            // 
-            this.profilePicturePaintItemBindingSource.DataSource = typeof(BadgeDesigner.ProfilePicturePaintItem);
-            // 
             // numericUpDown_BadgeHeight
             // 
             this.numericUpDown_BadgeHeight.Location = new System.Drawing.Point(299, 629);
@@ -365,6 +366,17 @@
             this.label6.TabIndex = 5;
             this.label6.Text = "Height";
             // 
+            // button_NewItem
+            // 
+            this.button_NewItem.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_NewItem.Location = new System.Drawing.Point(1076, 1);
+            this.button_NewItem.Name = "button_NewItem";
+            this.button_NewItem.Size = new System.Drawing.Size(95, 23);
+            this.button_NewItem.TabIndex = 2;
+            this.button_NewItem.Text = "New Item";
+            this.button_NewItem.UseVisualStyleBackColor = true;
+            this.button_NewItem.Click += new System.EventHandler(this.button_NewItem_Click);
+            // 
             // PaintBoard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -375,6 +387,7 @@
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.button_SaveChanges);
             this.Controls.Add(this.label5);
+            this.Controls.Add(this.button_NewItem);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button_PrintBadge);
             this.Controls.Add(this.button2);
@@ -390,6 +403,7 @@
             this.Load += new System.EventHandler(this.PaintBoard_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Badge)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_DP)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.profilePicturePaintItemBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_X)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Y)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Width)).EndInit();
@@ -397,7 +411,6 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.profilePicturePaintItemBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_BadgeHeight)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_BadgeWidth)).EndInit();
             this.ResumeLayout(false);
@@ -433,6 +446,7 @@
         private System.Windows.Forms.NumericUpDown numericUpDown_BadgeWidth;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Button button_NewItem;
     }
 }
 

@@ -13,6 +13,7 @@ namespace BadgeDesigner
     public partial class UcPaintItem : UserControl
     {
         public Action<PaintItem> ItemUpdated;
+        public Action<PaintItem> DeleteButtonClicked;
         private bool Loaded;
         public UcPaintItem()
         {
@@ -90,6 +91,11 @@ namespace BadgeDesigner
             {
                 ItemUpdated?.Invoke(this.PaintItem);
             }
+        }
+
+        private void button_Delete_Click(object sender, EventArgs e)
+        {
+            DeleteButtonClicked?.Invoke(this.PaintItem);
         }
     }
 }

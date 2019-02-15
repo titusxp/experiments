@@ -22,14 +22,17 @@ namespace BadgeDesigner
         {
             this.OriginalImage = this.pictureBox_Badge.Image;
             var paintItems = GetPaintItems();
-            //var dpItem = paintItems.FirstOrDefault(i => i.PaintedItemType == PaintedItemTypes.ProfilePicture) as ProfilePicturePaintItem;
-            //if (dpItem == null)
-            //{
-            //    dpItem = new ProfilePicturePaintItem();
-            //    paintItems.Add(dpItem);
-            //}
 
-            //this.DPPaintItem = dpItem;
+            LoadPaintItemsToUI(paintItems);
+
+            this.numericUpDown_X.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
+            this.numericUpDown_Y.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
+            this.numericUpDown_Width.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
+            this.numericUpDown_Height.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
+        }
+
+        private void LoadPaintItemsToUI(List<PaintItem> paintItems)
+        {
             this.flowLayoutPanel1.Controls.Clear();
             foreach (var paintItem in paintItems.Where(i => i.PaintedItemType != PaintedItemTypes.ProfilePicture))
             {
@@ -40,17 +43,11 @@ namespace BadgeDesigner
                     Margin = new Padding(0, 10, 0, 0)
                 };
                 uc.ItemUpdated += (s) => { this.UpdateImage(); };
+                uc.DeleteButtonClicked += (s) => { this.RemoveItem(s?.ItemCaption); };
                 flowLayoutPanel1.Controls.Add(uc);
             }
 
             this.UpdateImage();
-
-
-
-            this.numericUpDown_X.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
-            this.numericUpDown_Y.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
-            this.numericUpDown_Width.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
-            this.numericUpDown_Height.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
         }
 
         public Image OriginalImage { get; set; }
@@ -287,6 +284,31 @@ namespace BadgeDesigner
         private void button3_Click(object sender, EventArgs e)
         {
             this.flowLayoutPanel_PrintList.Controls.Clear();
+        }
+
+        private void button_NewItem_Click(object sender, EventArgs e)
+        {
+            using (var newItemForm = new frmAddItem())
+            {
+                newItemForm.OKButtonClicked += (s) =>
+                {
+                    var items = GetUpdatedPaintItems();
+                    items.Add(new PaintItem()
+                    {
+                        ItemCaption = s
+                    });
+                    this.LoadPaintItemsToUI(items);
+                };
+                newItemForm.ShowDialog(this);
+            }
+        }
+
+        private void RemoveItem(string itemCaption)
+        {
+            var items = GetUpdatedPaintItems();
+            var selectItem = items.FirstOrDefault(i => i.ItemCaption == itemCaption);
+            items.Remove(selectItem);
+            this.LoadPaintItemsToUI(items);
         }
     }
 }

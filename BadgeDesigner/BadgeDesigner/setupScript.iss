@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Badge Designer"
-#define MyAppVersion "1.0"
+#define MyAppVersion "1.6"
 #define MyAppPublisher "CBC Health Services"
 #define MyAppURL "http://www.cbchealthservices.org"
 #define MyAppExeName "BadgeDesigner.exe"
