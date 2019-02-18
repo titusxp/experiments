@@ -15,12 +15,36 @@ namespace WinForms.Classes
         {
             this.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.EnableResizing;
             this.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            this.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
+            this.AllowUserToResizeRows = false;
             this.RowHeadersVisible = false;
+            this.AutoSize = false;
+            this.ScrollBars = ScrollBars.Both;
+            this.AllowUserToAddRows = false;
+            this.AllowUserToDeleteRows = false;
+            this.AllowUserToOrderColumns = true;
+            this.AllowUserToResizeRows = false;
+            this.AutoGenerateColumns = false;
+            this.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.ReadOnly = true;
+            this.RowHeadersVisible = false;
+            this.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            this.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.ShowCellErrors = false;
+            this.ShowRowErrors = false;
+
             this.ColumnRemoved += this_UIUpdated;
             this.ColumnWidthChanged += this_UIUpdated;
 
             Timer = new Timer { Interval = 1000 };
             Timer.Tick += Timer_Tick;
+        }
+
+        public sealed override bool AutoSize
+        {
+            get { return base.AutoSize; }
+            set { base.AutoSize = value; }
         }
 
         private void this_UIUpdated(object sender, DataGridViewColumnEventArgs e)
@@ -92,7 +116,6 @@ namespace WinForms.Classes
 
         private void LoadHeaderTextBoxes()
         {
-            this.SuspendLayout();
             var textBoxes = new List<Control>();
 
             var columns = this.Columns.Cast<DataGridViewTextBoxColumn>().ToList();
@@ -126,7 +149,7 @@ namespace WinForms.Classes
 
             var controlsToAdd = textBoxes.Where(c => this.Controls.Contains(c) == false).ToArray();
             this.Controls.AddRange(controlsToAdd);
-            this.ResumeLayout();
+            this.Refresh();
         }
 
         private void Timer_Tick(object sender, EventArgs e)
