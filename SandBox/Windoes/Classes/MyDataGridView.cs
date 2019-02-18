@@ -8,6 +8,9 @@ namespace WinForms.Classes
 {
     public class MyDataGridView : DataGridView
     {
+        private readonly Timer Timer;
+        private object _dataSource;
+
         public MyDataGridView()
         {
             this.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.EnableResizing;
@@ -15,6 +18,9 @@ namespace WinForms.Classes
             this.RowHeadersVisible = false;
             this.ColumnRemoved += this_UIUpdated;
             this.ColumnWidthChanged += this_UIUpdated;
+
+            Timer = new Timer { Interval = 1000 };
+            Timer.Tick += Timer_Tick;
         }
 
         private void this_UIUpdated(object sender, DataGridViewColumnEventArgs e)
@@ -22,55 +28,83 @@ namespace WinForms.Classes
             LoadHeaderTextBoxes();
         }
 
-        private DataGridViewRow HeaderRow = new DataGridViewRow();
-
         public new object DataSource
         {
             get { return base.DataSource; }
             set
             {
-                var obj = value;
-                //var list = value as IEnumerable<object>;
-                //if (list != null)
-                //{
-                //    var items = list.ToList();
-                //    var type = list.FirstOrDefault().GetType();
-                //    var instance = Activator.CreateInstance(type);
-                //    items.Insert(0, instance);
-                //    obj = items;
-                //}
-
-                base.DataSource = obj;
+                _dataSource = value;
+                DisplayData();
                 this.LoadHeaderTextBoxes();
+            }
+        }
+
+        private void DisplayData()
+        {
+            var filteredDataSource = _dataSource;
+            var list = _dataSource as IEnumerable<object>;
+            if (list != null && list.Any())
+            {
+                var dataType = list?.FirstOrDefault()?.GetType();
+
+                var textBoxes = this.Controls.Cast<Control>().Where(t => t is TextBox && string.IsNullOrEmpty(t.Text) == false);
+                foreach (var textBox in textBoxes)
+                {
+                    var column = this.Columns.Cast<DataGridViewTextBoxColumn>().FirstOrDefault(c => c.Tag == textBox);
+                    if (column == null) continue;
+                    filteredDataSource = FilterData(filteredDataSource, textBox.Text, column.DataPropertyName, dataType);
+                }
+            }
+
+            list = filteredDataSource as IEnumerable<object>;
+            base.DataSource = list?.ToList();
+        }
+
+        private object FilterData(object dataSource, string searchKeyword, string propertyName, Type datasourceType)
+        {
+            var propertyInfo = datasourceType.GetProperties()
+                .FirstOrDefault(p => p.Name.ToUpper() == propertyName.ToUpper());
+            if (propertyInfo == null)
+            {
+                return new object();
+            }
+
+            var isDateTime = propertyInfo.PropertyType == typeof(DateTime) ||
+                             propertyInfo.PropertyType == typeof(DateTime?);
+
+            var list = dataSource as IEnumerable<object>;
+            try
+            {
+                IEnumerable<object> filter;
+                if (isDateTime)
+                    filter = list.Where(i => string.Format("{0:dd-MMM-yyyy}", propertyInfo.GetValue(i)?.ToString()).ToLower()
+                                                 .Contains(searchKeyword.ToLower()) == true);
+                else
+                    filter = list.Where(i => propertyInfo.GetValue(i)?.ToString().ToLower()
+                            .Contains(searchKeyword.ToLower()) == true);
+                return filter;
+            }
+            catch (Exception ex)
+            {
+                return list;
             }
         }
 
         private void LoadHeaderTextBoxes()
         {
-            this.Controls.Clear();
+            this.SuspendLayout();
             var textBoxes = new List<Control>();
-            HeaderRow = new DataGridViewRow();
 
             var columns = this.Columns.Cast<DataGridViewTextBoxColumn>().ToList();
             foreach (var column in columns)
             {
-                //var column = c as MyGridViewColumn;
-                //if (column == null)
-                //{
-                //    continue;
-                //}
-
-
                 var textBox = column.Tag as TextBox;
+                if (textBox == null)
                 {
-                    if (textBox == null)
-                    {
-                        textBox = new TextBox();
-                        column.Tag = textBox;
-                    }
+                    textBox = new TextBox();
+                    column.Tag = textBox;
+                    textBox.TextChanged += FooterTextBox_TextChanged;
                 }
-
-                if (textBox == null) return;
                 var index = column.DisplayIndex;
                 var rectangle = this.GetColumnDisplayRectangle(index, true);
                 
@@ -78,15 +112,33 @@ namespace WinForms.Classes
                 textBox.Width = column.Width;
                 textBoxes.Add(textBox);
 
-                if (column != null && column.HeaderText != string.Empty && column.HeaderText.Contains(Environment.NewLine) == false)
+                if (column.HeaderText != string.Empty && column.HeaderText.Contains(Environment.NewLine) == false)
                 {
                     column.HeaderText = column.HeaderText + Environment.NewLine;
                 }
             }
 
-            
-            var array = textBoxes.ToArray();
-            this.Controls.AddRange(array);
+            var abandonedcontrols = this.Controls.Cast<Control>().Where(c => textBoxes.Contains(c) == false);
+            foreach (var c in abandonedcontrols)
+            {
+                this.Controls.Remove(c);
+            }
+
+            var controlsToAdd = textBoxes.Where(c => this.Controls.Contains(c) == false).ToArray();
+            this.Controls.AddRange(controlsToAdd);
+            this.ResumeLayout();
+        }
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            Timer.Stop();
+            DisplayData();
+        }
+
+        private void FooterTextBox_TextChanged(object sender, EventArgs e)
+        {
+            Timer.Stop();
+            Timer.Start();
         }
     }
 }
