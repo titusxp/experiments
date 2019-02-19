@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Windoes.Forms;
 using WinForms;
 
 namespace Windoes
@@ -17,7 +18,8 @@ namespace Windoes
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+            Application.Run(new Form1());
+            //Application.Run(new MainForm());
         }
     }
 }

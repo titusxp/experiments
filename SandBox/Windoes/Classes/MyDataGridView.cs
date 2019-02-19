@@ -36,6 +36,13 @@ namespace WinForms.Classes
 
             this.ColumnRemoved += this_UIUpdated;
             this.ColumnWidthChanged += this_UIUpdated;
+            this.Scroll += (s, e) =>
+            {
+                if (e.ScrollOrientation == ScrollOrientation.HorizontalScroll)
+                {
+                    this.this_UIUpdated(s, e);
+                }
+            };
 
             Timer = new Timer { Interval = 1000 };
             Timer.Tick += Timer_Tick;
@@ -47,7 +54,7 @@ namespace WinForms.Classes
             set { base.AutoSize = value; }
         }
 
-        private void this_UIUpdated(object sender, DataGridViewColumnEventArgs e)
+        private void this_UIUpdated(object sender, EventArgs e)
         {
             LoadHeaderTextBoxes();
         }

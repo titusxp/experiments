@@ -31,13 +31,23 @@ namespace WinForms
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.dataGridView = new WinForms.Classes.MyDataGridView();
             this.personBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.personBindingSource)).BeginInit();
-            this.panel1.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // panel1
+            // 
+            this.panel1.AutoScroll = true;
+            this.panel1.Controls.Add(this.dataGridView);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(788, 554);
+            this.panel1.TabIndex = 1;
             // 
             // dataGridView
             // 
@@ -56,36 +66,26 @@ namespace WinForms
             this.dataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView.ShowCellErrors = false;
             this.dataGridView.ShowRowErrors = false;
-            this.dataGridView.Size = new System.Drawing.Size(610, 398);
+            this.dataGridView.Size = new System.Drawing.Size(788, 554);
             this.dataGridView.TabIndex = 0;
             // 
             // personBindingSource
             // 
             this.personBindingSource.DataSource = typeof(WinForms.Classes.Person);
             // 
-            // panel1
-            // 
-            this.panel1.AutoScroll = true;
-            this.panel1.Controls.Add(this.dataGridView);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(610, 398);
-            this.panel1.TabIndex = 1;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(610, 398);
+            this.ClientSize = new System.Drawing.Size(788, 554);
             this.Controls.Add(this.panel1);
             this.Name = "MainForm";
             this.Text = "  ";
             this.Load += new System.EventHandler(this.MainForm_Load);
+            this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.personBindingSource)).EndInit();
-            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
