@@ -14,3 +14,4 @@ D:\Code\Experiments\experiments\BadgeDesigner\ImageResizer\obj\Debug\ImageResize
 D:\Code\Experiments\experiments\BadgeDesigner\ImageResizer\obj\Debug\ImageResizer.csproj.GenerateResource.Cache
 D:\Code\Experiments\experiments\BadgeDesigner\ImageResizer\obj\Debug\ImageResizer.dll
 D:\Code\Experiments\experiments\BadgeDesigner\ImageResizer\obj\Debug\ImageResizer.pdb
+D:\Code\Experiments\experiments\BadgeDesigner\ImageResizer\obj\Debug\ImageResizer.csproj.CoreCompileInputs.cache

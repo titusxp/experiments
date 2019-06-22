@@ -36,7 +36,6 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button_SaveChanges = new System.Windows.Forms.Button();
             this.pictureBox_DP = new System.Windows.Forms.PictureBox();
-            this.profilePicturePaintItemBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.button_Browse = new System.Windows.Forms.Button();
             this.numericUpDown_X = new System.Windows.Forms.NumericUpDown();
             this.numericUpDown_Y = new System.Windows.Forms.NumericUpDown();
@@ -57,9 +56,10 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.button_NewItem = new System.Windows.Forms.Button();
+            this.checkBox_ShowPhoto = new System.Windows.Forms.CheckBox();
+            this.profilePicturePaintItemBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Badge)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_DP)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.profilePicturePaintItemBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_X)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Y)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Width)).BeginInit();
@@ -68,6 +68,7 @@
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_BadgeHeight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_BadgeWidth)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.profilePicturePaintItemBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox_Badge
@@ -141,10 +142,6 @@
             this.pictureBox_DP.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox_DP.TabIndex = 3;
             this.pictureBox_DP.TabStop = false;
-            // 
-            // profilePicturePaintItemBindingSource
-            // 
-            this.profilePicturePaintItemBindingSource.DataSource = typeof(BadgeDesigner.ProfilePicturePaintItem);
             // 
             // button_Browse
             // 
@@ -250,6 +247,7 @@
             // 
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.groupBox1.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.groupBox1.Controls.Add(this.checkBox_ShowPhoto);
             this.groupBox1.Controls.Add(this.pictureBox_DP);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.button_Browse);
@@ -262,7 +260,7 @@
             this.groupBox1.Controls.Add(this.numericUpDown_Height);
             this.groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.groupBox1.ForeColor = System.Drawing.Color.White;
-            this.groupBox1.Location = new System.Drawing.Point(427, 396);
+            this.groupBox1.Location = new System.Drawing.Point(424, 396);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(276, 226);
             this.groupBox1.TabIndex = 6;
@@ -368,7 +366,7 @@
             // 
             // button_NewItem
             // 
-            this.button_NewItem.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_NewItem.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button_NewItem.Location = new System.Drawing.Point(1076, 1);
             this.button_NewItem.Name = "button_NewItem";
             this.button_NewItem.Size = new System.Drawing.Size(95, 23);
@@ -376,6 +374,21 @@
             this.button_NewItem.Text = "New Item";
             this.button_NewItem.UseVisualStyleBackColor = true;
             this.button_NewItem.Click += new System.EventHandler(this.button_NewItem_Click);
+            // 
+            // checkBox_ShowPhoto
+            // 
+            this.checkBox_ShowPhoto.AutoSize = true;
+            this.checkBox_ShowPhoto.Location = new System.Drawing.Point(6, 19);
+            this.checkBox_ShowPhoto.Name = "checkBox_ShowPhoto";
+            this.checkBox_ShowPhoto.Size = new System.Drawing.Size(93, 17);
+            this.checkBox_ShowPhoto.TabIndex = 6;
+            this.checkBox_ShowPhoto.Text = "Include Image";
+            this.checkBox_ShowPhoto.UseVisualStyleBackColor = true;
+            this.checkBox_ShowPhoto.CheckedChanged += new System.EventHandler(this.checkBox_ShowPhoto_CheckedChanged);
+            // 
+            // profilePicturePaintItemBindingSource
+            // 
+            this.profilePicturePaintItemBindingSource.DataSource = typeof(BadgeDesigner.ProfilePicturePaintItem);
             // 
             // PaintBoard
             // 
@@ -403,7 +416,6 @@
             this.Load += new System.EventHandler(this.PaintBoard_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Badge)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_DP)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.profilePicturePaintItemBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_X)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Y)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Width)).EndInit();
@@ -413,6 +425,7 @@
             this.groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_BadgeHeight)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_BadgeWidth)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.profilePicturePaintItemBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -447,6 +460,7 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button button_NewItem;
+        private System.Windows.Forms.CheckBox checkBox_ShowPhoto;
     }
 }
 

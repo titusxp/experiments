@@ -18,6 +18,8 @@ namespace BadgeDesigner
             InitializeComponent();
         }
 
+        private bool IncludeImage => checkBox_ShowPhoto.Checked;
+
         private void PaintBoard_Load(object sender, EventArgs e)
         {
             this.OriginalImage = this.pictureBox_Badge.Image;
@@ -75,7 +77,7 @@ namespace BadgeDesigner
                             location);
                     }
 
-                    if (this.DPPaintItem.ProfilePicture != null)
+                    if (this.IncludeImage && this.DPPaintItem.ProfilePicture != null)
                     {
                         graphics.DrawImage(this.DPPaintItem.ProfilePicture, this.DPPaintItem.X, this.DPPaintItem.Y, this.DPPaintItem.Width, this.DPPaintItem.Height);
                     }
@@ -309,6 +311,11 @@ namespace BadgeDesigner
             var selectItem = items.FirstOrDefault(i => i.ItemCaption == itemCaption);
             items.Remove(selectItem);
             this.LoadPaintItemsToUI(items);
+        }
+
+        private void checkBox_ShowPhoto_CheckedChanged(object sender, EventArgs e)
+        {
+            this.UpdateImage();
         }
     }
 }
