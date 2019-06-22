@@ -1,6 +1,6 @@
 ﻿namespace HBPP
 {
-    partial class mainForm
+    partial class MainForm
     {
         /// <summary>
         /// Required designer variable.
@@ -30,6 +30,7 @@
         {
             this.dataGridView = new System.Windows.Forms.DataGridView();
             this.button_Import = new System.Windows.Forms.Button();
+            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -52,6 +53,13 @@
             this.button_Import.TabIndex = 1;
             this.button_Import.Text = "Import Data";
             this.button_Import.UseVisualStyleBackColor = true;
+            this.button_Import.Click += new System.EventHandler(this.button_Import_Click);
+            // 
+            // openFileDialog
+            // 
+            this.openFileDialog.DefaultExt = "xlsx";
+            this.openFileDialog.FileName = "openFileDialog";
+            this.openFileDialog.Filter = "Excel Files|*.xlsx,*.xls, *csv";
             // 
             // mainForm
             // 
@@ -60,7 +68,7 @@
             this.ClientSize = new System.Drawing.Size(718, 453);
             this.Controls.Add(this.button_Import);
             this.Controls.Add(this.dataGridView);
-            this.Name = "mainForm";
+            this.Name = "MainForm";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
             this.ResumeLayout(false);
 
@@ -70,6 +78,7 @@
 
         private System.Windows.Forms.DataGridView dataGridView;
         private System.Windows.Forms.Button button_Import;
+        private System.Windows.Forms.OpenFileDialog openFileDialog;
     }
 }
 
