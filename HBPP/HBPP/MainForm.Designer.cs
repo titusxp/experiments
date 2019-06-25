@@ -29,7 +29,12 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.dataGridView = new System.Windows.Forms.DataGridView();
+            this.button_Import = new System.Windows.Forms.Button();
+            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.easyHTMLReports1 = new KimToo.EasyHTMLReports(this.components);
+            this.button_GeneratePrintout = new System.Windows.Forms.Button();
             this.codeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.employeeNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.accountNumberDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -38,10 +43,8 @@
             this.contributionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.stationDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.printItemBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.button_Import = new System.Windows.Forms.Button();
-            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.easyHTMLReports1 = new KimToo.EasyHTMLReports(this.components);
-            this.button_GeneratePrintout = new System.Windows.Forms.Button();
+            this.loadingCircle1 = new HBPP.LoadingCircle();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.printItemBindingSource)).BeginInit();
             this.SuspendLayout();
@@ -70,6 +73,43 @@
             this.dataGridView.ReadOnly = true;
             this.dataGridView.Size = new System.Drawing.Size(947, 568);
             this.dataGridView.TabIndex = 0;
+            // 
+            // button_Import
+            // 
+            this.button_Import.Location = new System.Drawing.Point(1, 4);
+            this.button_Import.Name = "button_Import";
+            this.button_Import.Size = new System.Drawing.Size(121, 23);
+            this.button_Import.TabIndex = 1;
+            this.button_Import.Text = "Import Data";
+            this.button_Import.UseVisualStyleBackColor = true;
+            this.button_Import.Click += new System.EventHandler(this.button_Import_Click);
+            // 
+            // openFileDialog
+            // 
+            this.openFileDialog.DefaultExt = "xlsx";
+            this.openFileDialog.FileName = "openFileDialog";
+            this.openFileDialog.Filter = "Excel Files|*.xlsx;*.xls;*csv";
+            // 
+            // easyHTMLReports1
+            // 
+            this.easyHTMLReports1.AlternativeRowBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(229)))), ((int)(((byte)(229)))), ((int)(((byte)(229)))));
+            this.easyHTMLReports1.AlternativeRowGridColor = System.Drawing.Color.FromArgb(((int)(((byte)(56)))), ((int)(((byte)(61)))), ((int)(((byte)(65)))));
+            this.easyHTMLReports1.HeaderBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(170)))), ((int)(((byte)(183)))), ((int)(((byte)(197)))));
+            this.easyHTMLReports1.HeaderFontColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(46)))));
+            this.easyHTMLReports1.HeaderGridColor = System.Drawing.Color.FromArgb(((int)(((byte)(56)))), ((int)(((byte)(61)))), ((int)(((byte)(65)))));
+            this.easyHTMLReports1.RowDefaultBackgroudColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.easyHTMLReports1.RowDefaultFontColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(46)))));
+            this.easyHTMLReports1.RowDefaultGridColor = System.Drawing.Color.FromArgb(((int)(((byte)(56)))), ((int)(((byte)(61)))), ((int)(((byte)(65)))));
+            // 
+            // button_GeneratePrintout
+            // 
+            this.button_GeneratePrintout.Location = new System.Drawing.Point(128, 4);
+            this.button_GeneratePrintout.Name = "button_GeneratePrintout";
+            this.button_GeneratePrintout.Size = new System.Drawing.Size(121, 23);
+            this.button_GeneratePrintout.TabIndex = 1;
+            this.button_GeneratePrintout.Text = "Generate Printout";
+            this.button_GeneratePrintout.UseVisualStyleBackColor = true;
+            this.button_GeneratePrintout.Click += new System.EventHandler(this.button_GeneratePrintout_Click);
             // 
             // codeDataGridViewTextBoxColumn
             // 
@@ -124,55 +164,48 @@
             // 
             this.printItemBindingSource.DataSource = typeof(HBPP.PrintItem);
             // 
-            // button_Import
+            // loadingCircle1
             // 
-            this.button_Import.Location = new System.Drawing.Point(1, 4);
-            this.button_Import.Name = "button_Import";
-            this.button_Import.Size = new System.Drawing.Size(121, 23);
-            this.button_Import.TabIndex = 1;
-            this.button_Import.Text = "Import Data";
-            this.button_Import.UseVisualStyleBackColor = true;
-            this.button_Import.Click += new System.EventHandler(this.button_Import_Click);
+            this.loadingCircle1.Active = false;
+            this.loadingCircle1.Color = System.Drawing.Color.DarkGray;
+            this.loadingCircle1.InnerCircleRadius = 7;
+            this.loadingCircle1.Location = new System.Drawing.Point(267, 4);
+            this.loadingCircle1.Name = "loadingCircle1";
+            this.loadingCircle1.NumberSpoke = 9;
+            this.loadingCircle1.OuterCircleRadius = 8;
+            this.loadingCircle1.RotationSpeed = 100;
+            this.loadingCircle1.Size = new System.Drawing.Size(32, 23);
+            this.loadingCircle1.SpokeThickness = 4;
+            this.loadingCircle1.StylePreset = HBPP.LoadingCircle.StylePresets.MacOSX;
+            this.loadingCircle1.TabIndex = 2;
+            this.loadingCircle1.Text = "loadingCircle1";
+            this.loadingCircle1.Visible = false;
             // 
-            // openFileDialog
+            // label1
             // 
-            this.openFileDialog.DefaultExt = "xlsx";
-            this.openFileDialog.FileName = "openFileDialog";
-            this.openFileDialog.Filter = "Excel Files|*.xlsx;*.xls;*csv";
-            // 
-            // easyHTMLReports1
-            // 
-            this.easyHTMLReports1.AlternativeRowBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(229)))), ((int)(((byte)(229)))), ((int)(((byte)(229)))));
-            this.easyHTMLReports1.AlternativeRowGridColor = System.Drawing.Color.FromArgb(((int)(((byte)(56)))), ((int)(((byte)(61)))), ((int)(((byte)(65)))));
-            this.easyHTMLReports1.HeaderBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(170)))), ((int)(((byte)(183)))), ((int)(((byte)(197)))));
-            this.easyHTMLReports1.HeaderFontColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(46)))));
-            this.easyHTMLReports1.HeaderGridColor = System.Drawing.Color.FromArgb(((int)(((byte)(56)))), ((int)(((byte)(61)))), ((int)(((byte)(65)))));
-            this.easyHTMLReports1.RowDefaultBackgroudColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.easyHTMLReports1.RowDefaultFontColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(46)))));
-            this.easyHTMLReports1.RowDefaultGridColor = System.Drawing.Color.FromArgb(((int)(((byte)(56)))), ((int)(((byte)(61)))), ((int)(((byte)(65)))));
-            // 
-            // button_GeneratePrintout
-            // 
-            this.button_GeneratePrintout.Location = new System.Drawing.Point(128, 4);
-            this.button_GeneratePrintout.Name = "button_GeneratePrintout";
-            this.button_GeneratePrintout.Size = new System.Drawing.Size(121, 23);
-            this.button_GeneratePrintout.TabIndex = 1;
-            this.button_GeneratePrintout.Text = "Generate Printout";
-            this.button_GeneratePrintout.UseVisualStyleBackColor = true;
-            this.button_GeneratePrintout.Click += new System.EventHandler(this.button_GeneratePrintout_Click);
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(305, 9);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(0, 13);
+            this.label1.TabIndex = 3;
+            this.label1.Visible = false;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(949, 600);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.loadingCircle1);
             this.Controls.Add(this.button_GeneratePrintout);
             this.Controls.Add(this.button_Import);
             this.Controls.Add(this.dataGridView);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.printItemBindingSource)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -191,6 +224,8 @@
         private System.Windows.Forms.BindingSource printItemBindingSource;
         private KimToo.EasyHTMLReports easyHTMLReports1;
         private System.Windows.Forms.Button button_GeneratePrintout;
+        private LoadingCircle loadingCircle1;
+        private System.Windows.Forms.Label label1;
     }
 }
 
