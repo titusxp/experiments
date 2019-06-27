@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -23,10 +24,15 @@ namespace HBPP
         {
             get
             {
-                var value = dataGridView.DataSource as List<PrintItem>;
+                var value = printItemBindingSource.DataSource as List<PrintItem>;
                 return value ?? new List<PrintItem>();
             }
-            set { dataGridView.DataSource = value; }
+            set
+            {
+                printItemBindingSource.DataSource = value
+                    //.Where(i => string.IsNullOrWhiteSpace(i.Station) == false)
+                    .OrderBy(i => i.Station).ThenBy(i => i.EmployeeName).ToList();
+            }
         }
 
         private void button_Import_Click(object sender, EventArgs e)
@@ -52,9 +58,9 @@ namespace HBPP
                             Code = row[0]?.Contents,
                             EmployeeName = row[1]?.Contents,
                             AccountNumber = row[2]?.Contents,
-                            Loan = row[3]?.Contents,
-                            Interest = row[4]?.Contents,
-                            Contribution = row[5]?.Contents,
+                            Loan = ToDouble(row[3]?.Contents),
+                            Interest = ToDouble(row[4]?.Contents),
+                            Contribution = ToDouble(row[5]?.Contents),
                             Station = row[6]?.Contents,
                         };
                         items.Add(item);
@@ -69,9 +75,23 @@ namespace HBPP
             }
         }
 
+        private double ToDouble(string stringValue)
+        {
+            double returnValue = 0;
+            if (double.TryParse(stringValue, out returnValue))
+            {
+                return returnValue;
+            }
+
+            return 0;
+        }
+
         private void button_GeneratePrintout_Click(object sender, EventArgs e)
         {
-            GenerateReportPrintOut(this.Items);
+            var items = this.Items.OrderBy(i => i.Station).ThenBy(i => i.EmployeeName)
+                //.Take(10)
+                .ToList();
+            GenerateReportPrintOut(items);
         }
 
         private void GenerateReportPrintOut(List<PrintItem> items)
@@ -80,14 +100,14 @@ namespace HBPP
             var hbppLogo = Image.FromFile("hbpp.jpeg");
             var signature = Image.FromFile("signature.jpeg");
 
-            var cbchsLogoStream = ToBase64(cbchsLogo);
-            var hbppLogoStream = ToBase64(hbppLogo);
-            var signatureStream = ToBase64(signature);
+            var cbchsLogoStream = "cbchs.png";//ToBase64(cbchsLogo);
+            var hbppLogoStream = "hbpp.jpeg";//ToBase64(hbppLogo);
+            var signatureStream = "signature.jpeg";//ToBase64(signature);
 
             this.button_GeneratePrintout.Enabled = this.button_Import.Enabled = false;
             this.loadingCircle1.Visible = this.label1.Visible = this.loadingCircle1.Active = true;
 
-            var html = "";
+            var html = "<table style='width:720px;page-break-inside:auto; margin:auto; position: static; overflow: visible; display: block'>";
 
             Action<string> callBack = ShowProgress;
             Action start = () =>
@@ -96,17 +116,38 @@ namespace HBPP
                 var count = items.Count();
                 foreach (var item in items)
                 {
-                    html += GenerateReportHtml(item, cbchsLogoStream, hbppLogoStream, signatureStream);
+                    var span = GenerateReportHtml(item, cbchsLogoStream, hbppLogoStream, signatureStream);
+
+                    if (i % 2 != 0)
+                    {
+                        html += $"<tr style='page-break-inside:avoid; page-break-after:auto'><td style='border:solid black;'>{span}</td>";
+                    }
+                    else
+                    {
+                        html += $"<td style='border:solid black;'>{span}</td></tr>";
+                    }
+
+                    //html += GenerateReportHtml(item, cbchsLogoStream, hbppLogoStream, signatureStream);
                     callBack.Invoke(string.Format("{0} / {1}", i, count));
                     i++;
                 }
+                html += "</table>";
+                var directoryName = "Cache";
+                if (Directory.Exists(directoryName) == false)
+                {
+                    Directory.CreateDirectory(directoryName);
+                }
+                var fileName = $"{directoryName}\\{Guid.NewGuid()}.html";
+                File.WriteAllText(fileName, html);
+                Process.Start(fileName);
 
                 Action end = () =>
                 {
-                    this.easyHTMLReports1.AddString(html);
+                    //this.easyHTMLReports1.Clear();
+                    //this.easyHTMLReports1.AddString(html);
                     this.button_GeneratePrintout.Enabled = this.button_Import.Enabled = true;
                     this.loadingCircle1.Visible = this.label1.Visible = this.loadingCircle1.Active = false;
-                    this.easyHTMLReports1.ShowPrintPreviewDialog();
+                    //this.easyHTMLReports1.ShowPrintPreviewDialog();
                 };
 
                 this.Invoke(end);
@@ -147,14 +188,13 @@ namespace HBPP
 
         private string GenerateReportHtml(PrintItem item, string cbcLogo, string hbppLogo, string signature)
         {
-            // return @"<span style='width=100px;border: solid black;'>Test</span>";
-            return
+            var html =
 $@"
-<span style='width: 360px; margin:5px; border:solid black; padding: 5px; display: inline-block;'>
-    <img src='data:image/png;base64,{cbcLogo}' style='width:50px; float:left'>
-    <img src='data:image/jpeg;base64,{hbppLogo}' style='width:50px; float:right'>
+<div style='width:350px; padding: 5px;'>
+    <img src='../{cbcLogo}' style='width:50px; float:left'>
+    <img src='../{hbppLogo}' style='width:50px; float:right'>
     <h4 style='text-align: center; margin: 0px;'>Health Board Pension Plan</h4>
-    <h5 style='text-align: center; margin: 0px;'>699636342 - 677318383 - 674416300</h5>
+    <h5 style='text-align: center; margin: 0px;font-size: 10pt'>699636342 - 677318383 - 674416300</h5>
     <h5 style='text-align: center; margin: 0px;'>June 30, 2019 Deductions</h5>
     <p style='text-align: center; margin: 0px;font-size: 8pt;'>{item.Station}</p>
     <hr />
@@ -168,7 +208,7 @@ $@"
     		</tr>
     		<tr>
     			<td>Loan Refund:</td>
-    			<td> {item.LoanInteger} FCFA</td>
+    			<td> {item.Loan} FCFA</td>
     		</tr>
     		<tr style='color:white;background-color:#555''>
     			<td>Total:</td>
@@ -177,13 +217,32 @@ $@"
             <tr>
     			<td>Sign:</td>
     			<td>
-                    <img src='data:image/jpeg;base64,{signature}' style='height:30px;width:100px'><br/>
+                    <img src='../{signature}' style='height:30px;width:100px'><br/>
     				<span style='font-size:10pt;font-style: italic'>HBPP Manager</span>
 				</td>
     		</tr>
     	</table>
-</span>
+</div>
 ";
+            //if (item.EmployeeName.Contains("WxxxcxEYIH"))
+            //{
+            //    var x = 0;
+            //}
+            return html;
+        }
+
+        //private void dataGridView_SortStringChanged(object sender, Zuby.ADGV.AdvancedDataGridView.SortEventArgs e)
+        //{
+        //    this.printItemBindingSource.Sort = this.dataGridView.SortString;
+        //}
+
+        //private void dataGridView_FilterStringChanged(object sender, Zuby.ADGV.AdvancedDataGridView.FilterEventArgs e)
+        //{
+        //    this.printItemBindingSource.Filter = this.dataGridView.FilterString;
+        //}
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
         }
     }
 }
