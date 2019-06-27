@@ -89,7 +89,7 @@ namespace HBPP
         private void button_GeneratePrintout_Click(object sender, EventArgs e)
         {
             var items = this.Items.OrderBy(i => i.Station).ThenBy(i => i.EmployeeName)
-                //.Take(10)
+                .Take(100)
                 .ToList();
             GenerateReportPrintOut(items);
         }
@@ -127,7 +127,6 @@ namespace HBPP
                         html += $"<td style='border:solid black;'>{span}</td></tr>";
                     }
 
-                    //html += GenerateReportHtml(item, cbchsLogoStream, hbppLogoStream, signatureStream);
                     callBack.Invoke(string.Format("{0} / {1}", i, count));
                     i++;
                 }
@@ -143,11 +142,8 @@ namespace HBPP
 
                 Action end = () =>
                 {
-                    //this.easyHTMLReports1.Clear();
-                    //this.easyHTMLReports1.AddString(html);
                     this.button_GeneratePrintout.Enabled = this.button_Import.Enabled = true;
                     this.loadingCircle1.Visible = this.label1.Visible = this.loadingCircle1.Active = false;
-                    //this.easyHTMLReports1.ShowPrintPreviewDialog();
                 };
 
                 this.Invoke(end);
@@ -198,7 +194,7 @@ $@"
     <h5 style='text-align: center; margin: 0px;'>June 30, 2019 Deductions</h5>
     <p style='text-align: center; margin: 0px;font-size: 8pt;'>{item.Station}</p>
     <hr />
-    <table style='font-size: 12pt;width: 300px;margin:auto'>
+    <table style='font-size: 12pt;width: 300px;margin:auto; border:0px'>
     		<tr>
     			<td colspan='2'> {item.EmployeeName}</td>
     		</tr>
@@ -210,9 +206,23 @@ $@"
     			<td>Loan Refund:</td>
     			<td> {item.Loan} FCFA</td>
     		</tr>
-    		<tr style='color:white;background-color:#555''>
-    			<td>Total:</td>
-    			<td> {item.Total} FCFA</td>
+    		<tr style='padding:5px'>
+    			<td>
+                 <div style='position: relative;'>
+                    <img src = '../black.png' style = 'width: 100%;height:20px' />
+                    <div style = 'position: absolute; top: 0px; left: 0px;' >
+                         Total:   
+                    </div>
+                </div >
+                </td>
+    			<td> 
+                    <div style='position: relative;'>
+                        <img src = '../black.png' style = 'width: 100%;height:20px' />
+                        <div style = 'position: absolute; top: 0px; left: 0px;' >
+                         {item.Total} FCFA    
+                        </div>
+                    </div >
+                </td>
     		</tr>
             <tr>
     			<td>Sign:</td>
@@ -224,22 +234,8 @@ $@"
     	</table>
 </div>
 ";
-            //if (item.EmployeeName.Contains("WxxxcxEYIH"))
-            //{
-            //    var x = 0;
-            //}
             return html;
         }
-
-        //private void dataGridView_SortStringChanged(object sender, Zuby.ADGV.AdvancedDataGridView.SortEventArgs e)
-        //{
-        //    this.printItemBindingSource.Sort = this.dataGridView.SortString;
-        //}
-
-        //private void dataGridView_FilterStringChanged(object sender, Zuby.ADGV.AdvancedDataGridView.FilterEventArgs e)
-        //{
-        //    this.printItemBindingSource.Filter = this.dataGridView.FilterString;
-        //}
 
         private void MainForm_Load(object sender, EventArgs e)
         {
