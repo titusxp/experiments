@@ -1,0 +1,14 @@
+﻿table, tr,  th, td {
+    border: solid black 1px;
+}
+
+table{
+    border-collapse: collapse;
+}
+
+@media print  
+{
+    div{
+        page-break-inside: avoid;
+    }
+}

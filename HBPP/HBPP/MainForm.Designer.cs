@@ -36,7 +36,11 @@ namespace HBPP
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.button_GeneratePrintout = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.dataGridView = new DataGridView();
+            this.dataGridView = new System.Windows.Forms.DataGridView();
+            this.button1 = new System.Windows.Forms.Button();
+            this.flowLayoutPanel_Buttons = new System.Windows.Forms.FlowLayoutPanel();
+            this.flowLayoutPanel_WaitForms = new System.Windows.Forms.FlowLayoutPanel();
+            this.loadingCircle1 = new HBPP.LoadingCircle();
             this.codeDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.employeeNameDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.accountNumberDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -46,14 +50,16 @@ namespace HBPP
             this.stationDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.totalDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.printItemBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.loadingCircle1 = new HBPP.LoadingCircle();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
+            this.flowLayoutPanel_Buttons.SuspendLayout();
+            this.flowLayoutPanel_WaitForms.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.printItemBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // button_Import
             // 
-            this.button_Import.Location = new System.Drawing.Point(1, 3);
+            this.button_Import.Location = new System.Drawing.Point(0, 0);
+            this.button_Import.Margin = new System.Windows.Forms.Padding(0);
             this.button_Import.Name = "button_Import";
             this.button_Import.Size = new System.Drawing.Size(121, 23);
             this.button_Import.TabIndex = 1;
@@ -69,7 +75,8 @@ namespace HBPP
             // 
             // button_GeneratePrintout
             // 
-            this.button_GeneratePrintout.Location = new System.Drawing.Point(128, 3);
+            this.button_GeneratePrintout.Location = new System.Drawing.Point(121, 0);
+            this.button_GeneratePrintout.Margin = new System.Windows.Forms.Padding(0);
             this.button_GeneratePrintout.Name = "button_GeneratePrintout";
             this.button_GeneratePrintout.Size = new System.Drawing.Size(121, 23);
             this.button_GeneratePrintout.TabIndex = 1;
@@ -80,11 +87,12 @@ namespace HBPP
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(305, 8);
+            this.label1.Location = new System.Drawing.Point(32, 0);
+            this.label1.Margin = new System.Windows.Forms.Padding(0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(0, 13);
+            this.label1.Padding = new System.Windows.Forms.Padding(5, 5, 0, 0);
+            this.label1.Size = new System.Drawing.Size(5, 18);
             this.label1.TabIndex = 3;
-            this.label1.Visible = false;
             // 
             // dataGridView
             // 
@@ -104,13 +112,61 @@ namespace HBPP
             this.stationDataGridViewTextBoxColumn1,
             this.totalDataGridViewTextBoxColumn});
             this.dataGridView.DataSource = this.printItemBindingSource;
-            //this.dataGridView.FilterAndSortEnabled = true;
-            this.dataGridView.Location = new System.Drawing.Point(1, 32);
+            this.dataGridView.Location = new System.Drawing.Point(1, 29);
             this.dataGridView.Name = "dataGridView";
-            this.dataGridView.Size = new System.Drawing.Size(948, 567);
+            this.dataGridView.Size = new System.Drawing.Size(948, 570);
             this.dataGridView.TabIndex = 4;
-            //this.dataGridView.SortStringChanged += new System.EventHandler<Zuby.ADGV.AdvancedDataGridView.SortEventArgs>(this.dataGridView_SortStringChanged);
-            //this.dataGridView.FilterStringChanged += new System.EventHandler<Zuby.ADGV.AdvancedDataGridView.FilterEventArgs>(this.dataGridView_FilterStringChanged);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(242, 0);
+            this.button1.Margin = new System.Windows.Forms.Padding(0);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(121, 23);
+            this.button1.TabIndex = 1;
+            this.button1.Text = "Generate Summary";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // flowLayoutPanel_Buttons
+            // 
+            this.flowLayoutPanel_Buttons.Controls.Add(this.button_Import);
+            this.flowLayoutPanel_Buttons.Controls.Add(this.button_GeneratePrintout);
+            this.flowLayoutPanel_Buttons.Controls.Add(this.button1);
+            this.flowLayoutPanel_Buttons.Location = new System.Drawing.Point(3, 1);
+            this.flowLayoutPanel_Buttons.Margin = new System.Windows.Forms.Padding(0);
+            this.flowLayoutPanel_Buttons.Name = "flowLayoutPanel_Buttons";
+            this.flowLayoutPanel_Buttons.Size = new System.Drawing.Size(365, 25);
+            this.flowLayoutPanel_Buttons.TabIndex = 5;
+            // 
+            // flowLayoutPanel_WaitForms
+            // 
+            this.flowLayoutPanel_WaitForms.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.flowLayoutPanel_WaitForms.Controls.Add(this.loadingCircle1);
+            this.flowLayoutPanel_WaitForms.Controls.Add(this.label1);
+            this.flowLayoutPanel_WaitForms.Location = new System.Drawing.Point(372, 1);
+            this.flowLayoutPanel_WaitForms.Name = "flowLayoutPanel_WaitForms";
+            this.flowLayoutPanel_WaitForms.Size = new System.Drawing.Size(577, 25);
+            this.flowLayoutPanel_WaitForms.TabIndex = 5;
+            this.flowLayoutPanel_WaitForms.Visible = false;
+            // 
+            // loadingCircle1
+            // 
+            this.loadingCircle1.Active = false;
+            this.loadingCircle1.Color = System.Drawing.Color.DarkGray;
+            this.loadingCircle1.InnerCircleRadius = 5;
+            this.loadingCircle1.Location = new System.Drawing.Point(0, 0);
+            this.loadingCircle1.Margin = new System.Windows.Forms.Padding(0);
+            this.loadingCircle1.Name = "loadingCircle1";
+            this.loadingCircle1.NumberSpoke = 12;
+            this.loadingCircle1.OuterCircleRadius = 11;
+            this.loadingCircle1.RotationSpeed = 100;
+            this.loadingCircle1.Size = new System.Drawing.Size(32, 23);
+            this.loadingCircle1.SpokeThickness = 2;
+            this.loadingCircle1.StylePreset = HBPP.LoadingCircle.StylePresets.MacOSX;
+            this.loadingCircle1.TabIndex = 2;
+            this.loadingCircle1.Text = "loadingCircle1";
             // 
             // codeDataGridViewTextBoxColumn1
             // 
@@ -181,40 +237,23 @@ namespace HBPP
             // 
             this.printItemBindingSource.DataSource = typeof(HBPP.PrintItem);
             // 
-            // loadingCircle1
-            // 
-            this.loadingCircle1.Active = false;
-            this.loadingCircle1.Color = System.Drawing.Color.DarkGray;
-            this.loadingCircle1.InnerCircleRadius = 5;
-            this.loadingCircle1.Location = new System.Drawing.Point(267, 3);
-            this.loadingCircle1.Name = "loadingCircle1";
-            this.loadingCircle1.NumberSpoke = 12;
-            this.loadingCircle1.OuterCircleRadius = 11;
-            this.loadingCircle1.RotationSpeed = 100;
-            this.loadingCircle1.Size = new System.Drawing.Size(32, 23);
-            this.loadingCircle1.SpokeThickness = 2;
-            this.loadingCircle1.StylePreset = HBPP.LoadingCircle.StylePresets.MacOSX;
-            this.loadingCircle1.TabIndex = 2;
-            this.loadingCircle1.Text = "loadingCircle1";
-            this.loadingCircle1.Visible = false;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(949, 600);
+            this.Controls.Add(this.flowLayoutPanel_WaitForms);
+            this.Controls.Add(this.flowLayoutPanel_Buttons);
             this.Controls.Add(this.dataGridView);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.loadingCircle1);
-            this.Controls.Add(this.button_GeneratePrintout);
-            this.Controls.Add(this.button_Import);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
             this.Load += new System.EventHandler(this.MainForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
+            this.flowLayoutPanel_Buttons.ResumeLayout(false);
+            this.flowLayoutPanel_WaitForms.ResumeLayout(false);
+            this.flowLayoutPanel_WaitForms.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.printItemBindingSource)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -234,6 +273,9 @@ namespace HBPP
         private System.Windows.Forms.DataGridViewTextBoxColumn contributionDataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn stationDataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn totalDataGridViewTextBoxColumn;
+        private Button button1;
+        private FlowLayoutPanel flowLayoutPanel_Buttons;
+        private FlowLayoutPanel flowLayoutPanel_WaitForms;
     }
 }
 

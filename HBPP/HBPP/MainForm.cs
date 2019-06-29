@@ -240,5 +240,101 @@ $@"
         private void MainForm_Load(object sender, EventArgs e)
         {
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.flowLayoutPanel_Buttons.Enabled = false;
+            this.flowLayoutPanel_WaitForms.Visible = this.loadingCircle1.Active = true;
+            var items = this.Items.GroupBy(i => i.Station);
+
+            Action start = () =>
+            {
+                var html = @"
+<html>
+    <head>
+        <title>Summaries</title>
+        <link rel='stylesheet' href='../site.css' />
+    </head>
+    <body>";
+                foreach (var item in items)
+                {
+                    var vals = item.Select(i => i).OrderBy(i => i.EmployeeName).ToList();
+                    html += GenerateSummaryHtml(vals);
+                }
+
+                html += @"
+    </body>
+<html>";
+                
+                var directoryName = "Cache";
+                if (Directory.Exists(directoryName) == false)
+                {
+                    Directory.CreateDirectory(directoryName);
+                }
+                var fileName = $"{directoryName}\\{Guid.NewGuid()}.html";
+                File.WriteAllText(fileName, html);
+                Process.Start(fileName);
+
+                Action end = () =>
+                {
+                    this.flowLayoutPanel_Buttons.Enabled = true;
+                    this.flowLayoutPanel_WaitForms.Visible = this.loadingCircle1.Active = false;
+                };
+
+                this.Invoke(end);
+            };
+
+
+            start.BeginInvoke(null, null);
+        }
+
+        private string GenerateSummaryHtml(List<PrintItem> items)
+        {
+            var cbcLogo = "cbchs.png";
+            var hbppLogo = "hbpp.jpeg";
+            var item = items.FirstOrDefault();
+            var html =
+                $@"
+<div style='width:800px; padding: 5px; margin:auto;'>
+    <img src='../{cbcLogo}' style='width:80px; float:left'>
+    <img src='../{hbppLogo}' style='width:80px; float:right'>
+    <h4 style='text-align: center; margin: 0px;'>HEALTH BOARD PENSION PLAN</h4>
+    <h5 style='text-align: center; margin: 0px;font-size: 10pt'>P O Box 01-NKWEN BAMENDA</h5>
+    <h5 style='text-align: center; margin: 0px;font-size: 10pt'>TEL: 699636342 - 677318383 - 674416300</h5>
+    <h5 style='text-align: center; margin: 0px;'>Email: cbchshbpp@yahoo.com</h5>
+    <p style='text-align: center; margin: 0px;font-size: 8pt;'>Station: {item?.Station}</p>
+    <hr />
+    <table id='summaryTable' style='font-size: 12pt;width:100%; margin:auto; border:solid black 1px'>
+    	<tr>
+               <th>NO:</th> 
+               <th>CODE</th> 
+               <th>MEMBER'S NAME</th> 
+               <th>LOAN</th> 
+               <th>Contribution</th> 
+               <th>TOTAL</th> 
+            </tr>";
+
+            var x = 1;
+            foreach (var i in items)
+            {
+                html += $@"
+                <tr>
+                   <td>{x}</td> 
+                   <td>{i.Code}</td> 
+                   <td>{i.EmployeeName}</td> 
+                   <td>{i.Loan}</td> 
+                   <td>{i.Contribution}</td> 
+                   <td>{i.Total}</td> 
+                </tr>";
+                x++;
+            }
+
+            html += @"
+    </table>
+    <div style='height:100px;'></div>
+</div>";
+
+            return html;
+        }
     }
 }
