@@ -2,8 +2,8 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "HBPP "
-#define MyAppVersion "19.06.29"
-#define MyAppOutputFileName "HBPP 19.06.29"
+#define MyAppVersion "19.07.05"
+#define MyAppOutputFileName "HBPP 19.07.05"
 #define MyAppPublisher "CBC Health Services"
 #define MyAppURL "http://www.cbchealthservices.org/"
 #define MyAppExeName "HBPP.exe"

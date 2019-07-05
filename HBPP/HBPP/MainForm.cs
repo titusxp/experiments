@@ -30,7 +30,6 @@ namespace HBPP
             set
             {
                 printItemBindingSource.DataSource = value
-                    //.Where(i => string.IsNullOrWhiteSpace(i.Station) == false)
                     .OrderBy(i => i.Station).ThenBy(i => i.EmployeeName).ToList();
             }
         }
@@ -88,24 +87,19 @@ namespace HBPP
 
         private void button_GeneratePrintout_Click(object sender, EventArgs e)
         {
-            var items = this.Items.OrderBy(i => i.Station).ThenBy(i => i.EmployeeName)
-                .Take(100)
-                .ToList();
+            var items = this.Items.OrderBy(i => i.Station).ThenBy(i => i.EmployeeName).ToList();
             GenerateReportPrintOut(items);
         }
 
         private void GenerateReportPrintOut(List<PrintItem> items)
         {
-            var cbchsLogo = Image.FromFile("cbchs.png");
-            var hbppLogo = Image.FromFile("hbpp.jpeg");
-            var signature = Image.FromFile("signature.jpeg");
 
-            var cbchsLogoStream = "cbchs.png";//ToBase64(cbchsLogo);
-            var hbppLogoStream = "hbpp.jpeg";//ToBase64(hbppLogo);
-            var signatureStream = "signature.jpeg";//ToBase64(signature);
+            var cbchsLogoStream = "cbchs.png";
+            var hbppLogoStream = "hbpp.jpeg";
+            var signatureStream = "signature.jpeg";
 
-            this.button_GeneratePrintout.Enabled = this.button_Import.Enabled = false;
-            this.loadingCircle1.Visible = this.label1.Visible = this.loadingCircle1.Active = true;
+
+            ToggleWaiting(showWaitForm: true);
 
             var html = "<table style='width:720px;page-break-inside:auto; margin:auto; position: static; overflow: visible; display: block'>";
 
@@ -131,19 +125,11 @@ namespace HBPP
                     i++;
                 }
                 html += "</table>";
-                var directoryName = "Cache";
-                if (Directory.Exists(directoryName) == false)
-                {
-                    Directory.CreateDirectory(directoryName);
-                }
-                var fileName = $"{directoryName}\\{Guid.NewGuid()}.html";
-                File.WriteAllText(fileName, html);
-                Process.Start(fileName);
 
                 Action end = () =>
                 {
-                    this.button_GeneratePrintout.Enabled = this.button_Import.Enabled = true;
-                    this.loadingCircle1.Visible = this.label1.Visible = this.loadingCircle1.Active = false;
+                    ReportPrinter.PrintReport(html);
+                    ToggleWaiting(showWaitForm: false);
                 };
 
                 this.Invoke(end);
@@ -169,71 +155,70 @@ namespace HBPP
             
         }
 
-        public string ToBase64(Image image)
-        {
-            using (MemoryStream m = new MemoryStream())
-            {
-                image.Save(m, image.RawFormat);
-                byte[] imageBytes = m.ToArray();
+        //public string ToBase64(Image image)
+        //{
+        //    using (MemoryStream m = new MemoryStream())
+        //    {
+        //        image.Save(m, image.RawFormat);
+        //        byte[] imageBytes = m.ToArray();
 
-                // Convert byte[] to Base64 String
-                string base64String = Convert.ToBase64String(imageBytes);
-                return base64String;
-            }
-        }
+        //        // Convert byte[] to Base64 String
+        //        string base64String = Convert.ToBase64String(imageBytes);
+        //        return base64String;
+        //    }
+        //}
 
         private string GenerateReportHtml(PrintItem item, string cbcLogo, string hbppLogo, string signature)
         {
-            var html =
-$@"
-<div style='width:350px; padding: 5px;'>
-    <img src='../{cbcLogo}' style='width:50px; float:left'>
-    <img src='../{hbppLogo}' style='width:50px; float:right'>
-    <h4 style='text-align: center; margin: 0px;'>Health Board Pension Plan</h4>
-    <h5 style='text-align: center; margin: 0px;font-size: 10pt'>699636342 - 677318383 - 674416300</h5>
-    <h5 style='text-align: center; margin: 0px;'>June 30, 2019 Deductions</h5>
-    <p style='text-align: center; margin: 0px;font-size: 8pt;'>{item.Station}</p>
-    <hr />
-    <table style='font-size: 12pt;width: 300px;margin:auto; border:0px'>
-    		<tr>
-    			<td colspan='2'> {item.EmployeeName}</td>
-    		</tr>
-    		<tr>
-    			<td>Contributions:</td>
-    			<td> {item.Contribution} FCFA</td>
-    		</tr>
-    		<tr>
-    			<td>Loan Refund:</td>
-    			<td> {item.Loan} FCFA</td>
-    		</tr>
-    		<tr style='padding:5px'>
-    			<td>
-                 <div style='position: relative;'>
-                    <img src = '../black.png' style = 'width: 100%;height:20px' />
-                    <div style = 'position: absolute; top: 0px; left: 0px;' >
-                         Total:   
-                    </div>
-                </div >
-                </td>
-    			<td> 
-                    <div style='position: relative;'>
-                        <img src = '../black.png' style = 'width: 100%;height:20px' />
-                        <div style = 'position: absolute; top: 0px; left: 0px;' >
-                         {item.Total} FCFA    
+            var html = $@"
+                        <div style='width:350px; padding: 5px;'>
+                            <img src='../{cbcLogo}' style='width:50px; float:left'>
+                            <img src='../{hbppLogo}' style='width:50px; float:right'>
+                            <h4 style='text-align: center; margin: 0px;'>Health Board Pension Plan</h4>
+                            <h5 style='text-align: center; margin: 0px;font-size: 10pt'>699636342 - 677318383 - 674416300</h5>
+                            <h5 style='text-align: center; margin: 0px;'>June 30, 2019 Deductions</h5>
+                            <p style='text-align: center; margin: 0px;font-size: 8pt;'>{item.Station}</p>
+                            <hr />
+                            <table style='font-size: 12pt;width: 300px;margin:auto; border:0px'>
+    		                        <tr>
+    			                        <td colspan='2'> {item.EmployeeName}</td>
+    		                        </tr>
+    		                        <tr>
+    			                        <td>Contributions:</td>
+    			                        <td style = 'text-align:right;'> {String.Format("{0:n0}", item.Contribution)} FCFA</td>
+    		                        </tr>
+    		                        <tr>
+    			                        <td>Loan Refund:</td>
+    			                        <td style = 'text-align:right;'> {String.Format("{0:n0}", item.Loan)} FCFA</td>
+    		                        </tr>
+    		                        <tr style='padding:5px'>
+    			                        <td>
+                                            <div style='position: relative;'>
+                                            <img src = '../black.png' style = 'width: 100%;height:20px' />
+                                            <div style = 'position: absolute; top: 0px; left: 0px;' >
+                                                    Total:   
+                                            </div>
+                                        </div >
+                                        </td>
+    			                        <td> 
+                                            <div style='position: relative;'>
+                                                <img src = '../black.png' style = 'width: 100%;height:20px' />
+                                                <div style = 'width: 100%;text-align:right; position: absolute; top: 0px; left: 0px;' >
+                                                    {String.Format("{0:n0}", item.Total)} FCFA    
+                                                </div>
+                                            </div >
+                                        </td>
+    		                        </tr>
+                                    <tr>
+    			                        <td>Sign:</td>
+    			                        <td>
+                                            <img src='../{signature}' style='height:30px;width:100px'><br/>
+    				                        <span style='font-size:10pt;font-style: italic'>HBPP Manager</span>
+				                        </td>
+    		                        </tr>
+    	                        </table>
                         </div>
-                    </div >
-                </td>
-    		</tr>
-            <tr>
-    			<td>Sign:</td>
-    			<td>
-                    <img src='../{signature}' style='height:30px;width:100px'><br/>
-    				<span style='font-size:10pt;font-style: italic'>HBPP Manager</span>
-				</td>
-    		</tr>
-    	</table>
-</div>
-";
+                        ";
             return html;
         }
 
@@ -241,44 +226,42 @@ $@"
         {
         }
 
+        private void ToggleWaiting(bool showWaitForm)
+        {
+            this.flowLayoutPanel_Buttons.Enabled = !showWaitForm;
+            this.flowLayoutPanel_WaitForms.Visible = this.loadingCircle1.Active = showWaitForm;
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
-            this.flowLayoutPanel_Buttons.Enabled = false;
-            this.flowLayoutPanel_WaitForms.Visible = this.loadingCircle1.Active = true;
+            ToggleWaiting(showWaitForm: true);
             var items = this.Items.GroupBy(i => i.Station);
 
             Action start = () =>
             {
                 var html = @"
-<html>
-    <head>
-        <title>Summaries</title>
-        <link rel='stylesheet' href='../site.css' />
-    </head>
-    <body>";
-                foreach (var item in items)
-                {
-                    var vals = item.Select(i => i).OrderBy(i => i.EmployeeName).ToList();
-                    html += GenerateSummaryHtml(vals);
-                }
+                            <html>
+                                <head>
+                                    <title>Summaries</title>
+                                    <link rel='stylesheet' href='../site.css' />
+                                </head>
+                                <body>";
+                                        foreach (var item in items)
+                                        {
+                                            var vals = item.Select(i => i).OrderBy(i => i.EmployeeName).ToList();
+                                            html += GenerateSummaryHtml(vals);
+                                        }
 
-                html += @"
-    </body>
-<html>";
-                
-                var directoryName = "Cache";
-                if (Directory.Exists(directoryName) == false)
-                {
-                    Directory.CreateDirectory(directoryName);
-                }
-                var fileName = $"{directoryName}\\{Guid.NewGuid()}.html";
-                File.WriteAllText(fileName, html);
-                Process.Start(fileName);
+                                        html += @"
+                                </body>
+                            <html>";
+
 
                 Action end = () =>
                 {
-                    this.flowLayoutPanel_Buttons.Enabled = true;
-                    this.flowLayoutPanel_WaitForms.Visible = this.loadingCircle1.Active = false;
+                    ReportPrinter.PrintReport(html);
+
+                    ToggleWaiting(showWaitForm:false);
                 };
 
                 this.Invoke(end);
@@ -295,44 +278,61 @@ $@"
             var item = items.FirstOrDefault();
             var html =
                 $@"
-<div style='width:800px; padding: 5px; margin:auto;'>
-    <img src='../{cbcLogo}' style='width:80px; float:left'>
-    <img src='../{hbppLogo}' style='width:80px; float:right'>
-    <h4 style='text-align: center; margin: 0px;'>HEALTH BOARD PENSION PLAN</h4>
-    <h5 style='text-align: center; margin: 0px;font-size: 10pt'>P O Box 01-NKWEN BAMENDA</h5>
-    <h5 style='text-align: center; margin: 0px;font-size: 10pt'>TEL: 699636342 - 677318383 - 674416300</h5>
-    <h5 style='text-align: center; margin: 0px;'>Email: cbchshbpp@yahoo.com</h5>
-    <p style='text-align: center; margin: 0px;font-size: 8pt;'>Station: {item?.Station}</p>
-    <hr />
-    <table id='summaryTable' style='font-size: 12pt;width:100%; margin:auto; border:solid black 1px'>
-    	<tr>
-               <th>NO:</th> 
-               <th>CODE</th> 
-               <th>MEMBER'S NAME</th> 
-               <th>LOAN</th> 
-               <th>Contribution</th> 
-               <th>TOTAL</th> 
-            </tr>";
+                    <div style='width:800px; padding: 5px; margin:auto;'>
+                        <img src='../{cbcLogo}' style='width:80px; float:left'>
+                        <img src='../{hbppLogo}' style='width:80px; float:right'>
+                        <h4 style='text-align: center; margin: 0px;'>HEALTH BOARD PENSION PLAN</h4>
+                        <h5 style='text-align: center; margin: 0px;font-size: 10pt'>P O Box 01-NKWEN BAMENDA</h5>
+                        <h5 style='text-align: center; margin: 0px;font-size: 10pt'>TEL: 699636342 - 677318383 - 674416300</h5>
+                        <h5 style='text-align: center; margin: 0px;'>Email: cbchshbpp@yahoo.com</h5>
+                        <p style='text-align: center; margin: 0px;font-size: 8pt;'>Station: {item?.Station}</p>
+                        <hr />
+                        <table id='summaryTable' style='font-size: 12pt;width:100%; margin:auto; border:solid black 1px'>
+    	                    <tr>
+                                   <th>NO:</th> 
+                                   <th>CODE</th> 
+                                   <th>MEMBER'S NAME</th> 
+                                   <th>LOAN</th> 
+                                   <th>Contribution</th> 
+                                   <th>TOTAL</th> 
+                                </tr>";
 
-            var x = 1;
-            foreach (var i in items)
-            {
-                html += $@"
-                <tr>
-                   <td>{x}</td> 
-                   <td>{i.Code}</td> 
-                   <td>{i.EmployeeName}</td> 
-                   <td>{i.Loan}</td> 
-                   <td>{i.Contribution}</td> 
-                   <td>{i.Total}</td> 
-                </tr>";
-                x++;
-            }
+                                var x = 1;
+                                foreach (var i in items)
+                                {
+                                    html += $@"
+                                    <tr>
+                                       <td>{x}</td> 
+                                       <td>{i.Code}</td> 
+                                       <td>{i.EmployeeName}</td> 
+                                       <td style = 'text-align:right;'>{String.Format("{0:n0}", i.Loan)}</td> 
+                                       <td style = 'text-align:right;'>{String.Format("{0:n0}", i.Contribution)}</td> 
+                                       <td style = 'text-align:right;'>{String.Format("{0:n0}", i.Total)}</td> 
+                                    </tr>";
+                                    x++;
+                                }
 
-            html += @"
-    </table>
-    <div style='height:100px;'></div>
-</div>";
+                            var totalLoan = items.Sum(ii => ii.Loan);
+                            var totalContribution = items.Sum(ii => ii.Contribution);
+                            var totalTotal = items.Sum(ii => ii.Total);
+
+                            html += $@"
+                                    <tr>
+                                       <td colspan='3' style = 'text-align:right;'>Total</td> 
+                                       <td style = 'text-align:right;'>{String.Format("{0:n0}", totalLoan)}</td> 
+                                       <td style = 'text-align:right;'>{String.Format("{0:n0}", totalContribution)}</td> 
+                                       <td style = 'text-align:right;'>{String.Format("{0:n0}", totalTotal)}</td> 
+                                    </tr>
+                        </table>
+                        <br/><br/>
+                        <table style='width:100%;border:none;'>
+                            <tr>
+                                <td>Prepared By:</td>
+                                <td>Checked By:</td>
+                            </tr>
+                        </table>
+                        <div style='height:50px;'></div>
+                    </div>";
 
             return html;
         }

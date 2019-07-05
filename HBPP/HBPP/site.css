@@ -1,8 +1,8 @@
-﻿table, tr,  th, td {
+﻿#summaryTable, #summaryTable tr,  #summaryTable tr th, #summaryTable tr td {
     border: solid black 1px;
 }
 
-table{
+#summaryTable{
     border-collapse: collapse;
 }
 
