@@ -3,9 +3,9 @@ using Repository.Interfaces;
 
 namespace WebApi.Controllers
 {
-    public class UsersController : BaseController<User>
+    public class UsersController : BaseController<User>, IUsersController
     {
-        public UsersController(IBaseRepository<User> baseRepo) : base(baseRepo)
+        public UsersController(IUserRepository baseRepo) : base(baseRepo)
         {
         }
     }

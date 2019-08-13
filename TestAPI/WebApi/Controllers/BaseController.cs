@@ -4,7 +4,7 @@ using System.Web.Http;
 
 namespace WebApi.Controllers
 {
-    public class BaseController<T> : ApiController where T:class
+    public abstract class BaseController<T> : ApiController, IBaseController<T> where T : class
     {
         protected IBaseRepository<T> Repository { get; set; }
         public BaseController(IBaseRepository<T> baseRepo)

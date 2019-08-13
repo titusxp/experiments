@@ -48,6 +48,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\IBaseController.cs" />
+    <Compile Include="Controllers\IEmployeesController.cs" />
+    <Compile Include="Controllers\IUsersController.cs" />
     <Compile Include="IBaseRepository.cs" />
     <Compile Include="IDataContext.cs" />
     <Compile Include="IEmployeeRepository.cs" />
