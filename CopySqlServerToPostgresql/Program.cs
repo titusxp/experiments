@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
@@ -389,8 +390,9 @@ namespace CopySqlServerToPostgresql
                                 msColumnsB.Add("[" + msColumns[i] + "]");
                             }
 
+                            var cols = pgColumns.Select(c => $"\"{c}\"").ToList();
                             string msColumnsJoin = string.Join(",", msColumnsB);
-                            string pgColumnsJoin = string.Join(",", pgColumns);
+                            string pgColumnsJoin = string.Join(",", cols);
                             string pgParameters = "@" + string.Join(",@", pgColumns);
 
                             // Read values from source db.
@@ -403,6 +405,7 @@ namespace CopySqlServerToPostgresql
                             using (var dr = command.ExecuteReader(CommandBehavior.Default))
                             {
                                 uint pgInsertedCount = 0;
+                                uint pgFailedCount = 0;
 
                                 // Create insert query with column names and @ parameterlist.
                                 var pgSql = string.Format("INSERT INTO {0} ({1}) VALUES ({2});", pgTablename, pgColumnsJoin, pgParameters);
@@ -422,7 +425,6 @@ namespace CopySqlServerToPostgresql
                                 //    {
                                 //        Task.WaitAll(tasks.ToArray());
                                 //    }
-                                Console.WriteLine("");
                                 while (dr.Read())
                                 {
                                     int result = dr.GetValues(rowObjects);
@@ -430,15 +432,22 @@ namespace CopySqlServerToPostgresql
 
                                     if (result < 1)
                                     {
+                                        pgFailedCount++;
                                         Debug.Print(@"Error: " + pgSql);
                                     }
-
-                                    pgInsertedCount++;
-
-                                    Console.Write("\rInserted " + pgInsertedCount + " records.");
+                                    else
+                                    {
+                                        pgInsertedCount++;
+                                        Console.Write($"\rInserted {pgInsertedCount} records ({pgFailedCount} failed)");
+                                    }
                                 }
 
-                                Console.WriteLine($"{pgTablename}: Inserted {pgInsertedCount} records.");
+                                if(pgInsertedCount == 0 && pgFailedCount == 0)
+                                {
+                                    Console.WriteLine($"Inserted {pgInsertedCount} records ({pgFailedCount} failed)");
+                                }
+
+                                Console.WriteLine(string.Empty);
                                 Console.WriteLine(string.Empty);
                                 //Task.WaitAll(tasks.ToArray());
                             }
@@ -463,7 +472,7 @@ namespace CopySqlServerToPostgresql
         {
             string indexName = string.Empty;
             string indexColumns = string.Empty;
-            string pgTableName = schema + "." + tableName;
+            string pgTableName = $"{schema}.\"{tableName}\"";
             var indexes = new List<string>();
 
             try
@@ -937,10 +946,10 @@ SELECT base_schema_name, base_table_name, constraint_name, base_column_name, uni
                     //Debug.Print(base_table_name);
                     //Debug.Print(constraint_name);
 
-                    var pgTableName = baseSchemaName + "." + baseTableName;
+                    var pgTableName = $"{baseSchemaName}.\"{baseTableName}\"";
                     pgTableName = pgTableName.Replace(" ", "_");
 
-                    var pguniqueTableName = baseSchemaName + "." + uniqueTableName;
+                    var pguniqueTableName = $"{baseSchemaName}.\"{uniqueTableName}\"";
                     pguniqueTableName = pguniqueTableName.Replace(" ", "_");
 
                     //string fkSkip = @"|fk_xxxxxxxxxxx|fk_yyyyyyyyyyyyyyyyyyyyyy|";
@@ -951,7 +960,7 @@ SELECT base_schema_name, base_table_name, constraint_name, base_column_name, uni
                     //}
                     //else
                     {
-                        var sqlFk = string.Format("ALTER TABLE {0} ADD CONSTRAINT \"{1}\" FOREIGN KEY({2}) REFERENCES {3} ({4});", pgTableName, constraintName, baseColumnName, pguniqueTableName, uniqueColumnName);
+                        var sqlFk = $"ALTER TABLE {pgTableName} ADD CONSTRAINT \"{constraintName}\" FOREIGN KEY(\"{baseColumnName}\") REFERENCES {pguniqueTableName} (\"{uniqueColumnName}\");";
                         Debug.Print(sqlFk);
                         pgStatements.Add(sqlFk);
                     }
