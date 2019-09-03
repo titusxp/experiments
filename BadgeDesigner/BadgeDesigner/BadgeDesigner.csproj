@@ -142,6 +142,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="BADGE.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="favicon.ico" />
     <None Include="Resources\WhatsApp Image 2019-02-22 at 20.34.47.jpeg" />
     <None Include="Resources\delete.png" />

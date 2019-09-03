@@ -46,6 +46,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.checkBox_ShowPhoto = new System.Windows.Forms.CheckBox();
             this.button_PrintBadge = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.flowLayoutPanel_PrintList = new System.Windows.Forms.FlowLayoutPanel();
@@ -56,7 +57,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.button_NewItem = new System.Windows.Forms.Button();
-            this.checkBox_ShowPhoto = new System.Windows.Forms.CheckBox();
+            this.button_ChangeBackgroundImage = new System.Windows.Forms.Button();
             this.profilePicturePaintItemBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Badge)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_DP)).BeginInit();
@@ -74,10 +75,10 @@
             // pictureBox_Badge
             // 
             this.pictureBox_Badge.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pictureBox_Badge.Image = global::BadgeDesigner.Properties.Resources.templae;
-            this.pictureBox_Badge.Location = new System.Drawing.Point(1, 1);
+            this.pictureBox_Badge.Image = global::BadgeDesigner.Properties.Resources.BADGE;
+            this.pictureBox_Badge.Location = new System.Drawing.Point(1, 25);
             this.pictureBox_Badge.Name = "pictureBox_Badge";
-            this.pictureBox_Badge.Size = new System.Drawing.Size(420, 621);
+            this.pictureBox_Badge.Size = new System.Drawing.Size(420, 597);
             this.pictureBox_Badge.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox_Badge.TabIndex = 0;
             this.pictureBox_Badge.TabStop = false;
@@ -136,6 +137,7 @@
             this.pictureBox_DP.BackColor = System.Drawing.Color.Teal;
             this.pictureBox_DP.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pictureBox_DP.DataBindings.Add(new System.Windows.Forms.Binding("Image", this.profilePicturePaintItemBindingSource, "ProfilePicture", true));
+            this.pictureBox_DP.InitialImage = null;
             this.pictureBox_DP.Location = new System.Drawing.Point(4, 77);
             this.pictureBox_DP.Name = "pictureBox_DP";
             this.pictureBox_DP.Size = new System.Drawing.Size(138, 143);
@@ -267,6 +269,17 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Load DP";
             // 
+            // checkBox_ShowPhoto
+            // 
+            this.checkBox_ShowPhoto.AutoSize = true;
+            this.checkBox_ShowPhoto.Location = new System.Drawing.Point(6, 19);
+            this.checkBox_ShowPhoto.Name = "checkBox_ShowPhoto";
+            this.checkBox_ShowPhoto.Size = new System.Drawing.Size(93, 17);
+            this.checkBox_ShowPhoto.TabIndex = 6;
+            this.checkBox_ShowPhoto.Text = "Include Image";
+            this.checkBox_ShowPhoto.UseVisualStyleBackColor = true;
+            this.checkBox_ShowPhoto.CheckedChanged += new System.EventHandler(this.checkBox_ShowPhoto_CheckedChanged);
+            // 
             // button_PrintBadge
             // 
             this.button_PrintBadge.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -375,16 +388,15 @@
             this.button_NewItem.UseVisualStyleBackColor = true;
             this.button_NewItem.Click += new System.EventHandler(this.button_NewItem_Click);
             // 
-            // checkBox_ShowPhoto
+            // button_ChangeBackgroundImage
             // 
-            this.checkBox_ShowPhoto.AutoSize = true;
-            this.checkBox_ShowPhoto.Location = new System.Drawing.Point(6, 19);
-            this.checkBox_ShowPhoto.Name = "checkBox_ShowPhoto";
-            this.checkBox_ShowPhoto.Size = new System.Drawing.Size(93, 17);
-            this.checkBox_ShowPhoto.TabIndex = 6;
-            this.checkBox_ShowPhoto.Text = "Include Image";
-            this.checkBox_ShowPhoto.UseVisualStyleBackColor = true;
-            this.checkBox_ShowPhoto.CheckedChanged += new System.EventHandler(this.checkBox_ShowPhoto_CheckedChanged);
+            this.button_ChangeBackgroundImage.Location = new System.Drawing.Point(2, 1);
+            this.button_ChangeBackgroundImage.Name = "button_ChangeBackgroundImage";
+            this.button_ChangeBackgroundImage.Size = new System.Drawing.Size(170, 23);
+            this.button_ChangeBackgroundImage.TabIndex = 2;
+            this.button_ChangeBackgroundImage.Text = "Change Background Image";
+            this.button_ChangeBackgroundImage.UseVisualStyleBackColor = true;
+            this.button_ChangeBackgroundImage.Click += new System.EventHandler(this.Button_ChangeBackgroundImage_Click);
             // 
             // profilePicturePaintItemBindingSource
             // 
@@ -400,6 +412,7 @@
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.button_SaveChanges);
             this.Controls.Add(this.label5);
+            this.Controls.Add(this.button_ChangeBackgroundImage);
             this.Controls.Add(this.button_NewItem);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button_PrintBadge);
@@ -461,6 +474,7 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button button_NewItem;
         private System.Windows.Forms.CheckBox checkBox_ShowPhoto;
+        private System.Windows.Forms.Button button_ChangeBackgroundImage;
     }
 }
 

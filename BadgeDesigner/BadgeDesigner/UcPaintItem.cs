@@ -97,5 +97,14 @@ namespace BadgeDesigner
         {
             DeleteButtonClicked?.Invoke(this.PaintItem);
         }
+
+        private void CheckBox_WrapText_CheckedChanged(object sender, EventArgs e)
+        {
+            this.PaintItem.WrapText = this.checkBox_WrapText.Checked;
+            if (Loaded)
+            {
+                ItemUpdated?.Invoke(this.PaintItem);
+            }
+        }
     }
 }

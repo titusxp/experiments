@@ -33,6 +33,7 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.button2 = new System.Windows.Forms.Button();
+            this.button_Delete = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.label_FontName = new System.Windows.Forms.Label();
             this.label_Size = new System.Windows.Forms.Label();
@@ -45,8 +46,8 @@
             this.label14 = new System.Windows.Forms.Label();
             this.fontDialog1 = new System.Windows.Forms.FontDialog();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
+            this.checkBox_WrapText = new System.Windows.Forms.CheckBox();
             this.paintItemBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.button_Delete = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Y)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_X)).BeginInit();
@@ -67,6 +68,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.checkBox_WrapText);
             this.groupBox1.Controls.Add(this.comboBox1);
             this.groupBox1.Controls.Add(this.button2);
             this.groupBox1.Controls.Add(this.button_Delete);
@@ -111,12 +113,23 @@
             // button2
             // 
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button2.Location = new System.Drawing.Point(342, 44);
+            this.button2.Location = new System.Drawing.Point(392, 44);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(30, 23);
             this.button2.TabIndex = 4;
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // button_Delete
+            // 
+            this.button_Delete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_Delete.Image = global::BadgeDesigner.Properties.Resources.delete;
+            this.button_Delete.Location = new System.Drawing.Point(604, 17);
+            this.button_Delete.Name = "button_Delete";
+            this.button_Delete.Size = new System.Drawing.Size(30, 23);
+            this.button_Delete.TabIndex = 4;
+            this.button_Delete.UseVisualStyleBackColor = true;
+            this.button_Delete.Click += new System.EventHandler(this.button_Delete_Click);
             // 
             // button1
             // 
@@ -134,9 +147,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label_FontName.BackColor = System.Drawing.Color.White;
             this.label_FontName.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.paintItemBindingSource, "FontName", true));
-            this.label_FontName.Location = new System.Drawing.Point(238, 46);
+            this.label_FontName.Location = new System.Drawing.Point(295, 46);
             this.label_FontName.Name = "label_FontName";
-            this.label_FontName.Size = new System.Drawing.Size(113, 20);
+            this.label_FontName.Size = new System.Drawing.Size(96, 20);
             this.label_FontName.TabIndex = 3;
             // 
             // label_Size
@@ -144,9 +157,9 @@
             this.label_Size.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label_Size.BackColor = System.Drawing.Color.White;
             this.label_Size.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_Size.Location = new System.Drawing.Point(411, 46);
+            this.label_Size.Location = new System.Drawing.Point(458, 46);
             this.label_Size.Name = "label_Size";
-            this.label_Size.Size = new System.Drawing.Size(80, 20);
+            this.label_Size.Size = new System.Drawing.Size(60, 20);
             this.label_Size.TabIndex = 3;
             // 
             // label_Colour
@@ -154,15 +167,15 @@
             this.label_Colour.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label_Colour.BackColor = System.Drawing.Color.White;
             this.label_Colour.DataBindings.Add(new System.Windows.Forms.Binding("BackColor", this.paintItemBindingSource, "FontColor", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.label_Colour.Location = new System.Drawing.Point(554, 47);
+            this.label_Colour.Location = new System.Drawing.Point(569, 47);
             this.label_Colour.Name = "label_Colour";
-            this.label_Colour.Size = new System.Drawing.Size(57, 20);
+            this.label_Colour.Size = new System.Drawing.Size(42, 20);
             this.label_Colour.TabIndex = 3;
             // 
             // numericUpDown_Y
             // 
             this.numericUpDown_Y.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.paintItemBindingSource, "Y", true));
-            this.numericUpDown_Y.Location = new System.Drawing.Point(120, 44);
+            this.numericUpDown_Y.Location = new System.Drawing.Point(105, 44);
             this.numericUpDown_Y.Maximum = new decimal(new int[] {
             10000000,
             0,
@@ -192,7 +205,7 @@
             this.label16.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label16.AutoSize = true;
             this.label16.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label16.Location = new System.Drawing.Point(506, 48);
+            this.label16.Location = new System.Drawing.Point(522, 48);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(42, 15);
             this.label16.TabIndex = 0;
@@ -204,7 +217,7 @@
             this.label15.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label15.AutoSize = true;
             this.label15.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.Location = new System.Drawing.Point(378, 46);
+            this.label15.Location = new System.Drawing.Point(424, 46);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(27, 15);
             this.label15.TabIndex = 0;
@@ -215,7 +228,7 @@
             // 
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.Location = new System.Drawing.Point(101, 47);
+            this.label13.Location = new System.Drawing.Point(86, 47);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(13, 15);
             this.label13.TabIndex = 0;
@@ -226,7 +239,7 @@
             // 
             this.label14.AutoSize = true;
             this.label14.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label14.Location = new System.Drawing.Point(201, 48);
+            this.label14.Location = new System.Drawing.Point(261, 48);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(31, 15);
             this.label14.TabIndex = 0;
@@ -238,20 +251,21 @@
             this.fontDialog1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, ((byte)(0)));
             this.fontDialog1.FontMustExist = true;
             // 
+            // checkBox_WrapText
+            // 
+            this.checkBox_WrapText.AutoSize = true;
+            this.checkBox_WrapText.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.paintItemBindingSource, "WrapText", true));
+            this.checkBox_WrapText.Location = new System.Drawing.Point(167, 47);
+            this.checkBox_WrapText.Name = "checkBox_WrapText";
+            this.checkBox_WrapText.Size = new System.Drawing.Size(84, 21);
+            this.checkBox_WrapText.TabIndex = 6;
+            this.checkBox_WrapText.Text = "Wrap text";
+            this.checkBox_WrapText.UseVisualStyleBackColor = true;
+            this.checkBox_WrapText.CheckedChanged += new System.EventHandler(this.CheckBox_WrapText_CheckedChanged);
+            // 
             // paintItemBindingSource
             // 
             this.paintItemBindingSource.DataSource = typeof(BadgeDesigner.PaintItem);
-            // 
-            // button_Delete
-            // 
-            this.button_Delete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_Delete.Image = global::BadgeDesigner.Properties.Resources.delete;
-            this.button_Delete.Location = new System.Drawing.Point(604, 17);
-            this.button_Delete.Name = "button_Delete";
-            this.button_Delete.Size = new System.Drawing.Size(30, 23);
-            this.button_Delete.TabIndex = 4;
-            this.button_Delete.UseVisualStyleBackColor = true;
-            this.button_Delete.Click += new System.EventHandler(this.button_Delete_Click);
             // 
             // UcPaintItem
             // 
@@ -289,6 +303,7 @@
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label label_Size;
         private System.Windows.Forms.Button button_Delete;
+        private System.Windows.Forms.CheckBox checkBox_WrapText;
     }
 }
 

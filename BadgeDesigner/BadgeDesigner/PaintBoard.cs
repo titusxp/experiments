@@ -59,9 +59,16 @@ namespace BadgeDesigner
         {
             try
             {
-                var bitmap = (Bitmap) this.OriginalImage.Clone();
-                using (var graphics = Graphics.FromImage(bitmap))
+                var originalBmp = (Bitmap)this.OriginalImage.Clone();
+
+                // Create a blank bitmap with the same dimensions
+                Bitmap tempBitmap = new Bitmap(originalBmp.Width, originalBmp.Height);
+
+                // From this bitmap, the graphics can be obtained, because it has the right PixelFormat
+                
+                using (var graphics = Graphics.FromImage(tempBitmap))
                 {
+                    graphics.DrawImage(originalBmp, 0, 0);
                     var paintItems = GetUpdatedPaintItems();
                     foreach (var item in paintItems.Where(i => i.ItemValue != null))
                     {
@@ -70,25 +77,52 @@ namespace BadgeDesigner
                         //var stringLength = item.ItemValue.Length;
                         //var totalSize = characterSize * stringLength / 2;
                         var textSize = GetTextSize(item.ItemValue, item.FontStyle);
+
                         var imageWidthInPixels = this.pictureBox_Badge.Image.Width;
-                        var x = 2 + (imageWidthInPixels - textSize.Width) / 2;
-                        location.X = (int)x;
+                        var rectangle = item.WrapText ? 
+                            new RectangleF(0, location.Y, imageWidthInPixels, textSize.Height * 2):
+                            new RectangleF(0, location.Y, imageWidthInPixels, textSize.Height);
+                        //var rectangle = new RectangleF(location, new SizeF(textSize.Width, textSize.Height * 2));
+                        var sFormat = item.WrapText ? StringFormatFlags.FitBlackBox : StringFormatFlags.NoWrap;
+                        var format = new StringFormat(sFormat);
+                        //format.LineAlignment = StringAlignment.Center;
+                        format.Alignment = StringAlignment.Center;
                         graphics.DrawString(item.ItemValue, item.FontStyle, new SolidBrush(item.FontColor),
-                            location);
+                            rectangle, format);
+
+                        //if (item.WrapText)
+                        //{
+                        //    var rectangle = new RectangleF(0, location.Y, imageWidthInPixels, textSize.Height * 2);
+                        //    //var rectangle = new RectangleF(location, new SizeF(textSize.Width, textSize.Height * 2));
+                        //    var format = new StringFormat(StringFormatFlags.FitBlackBox);
+                        //    format.LineAlignment = StringAlignment.Center;
+                        //    format.Alignment = StringAlignment.Center;
+                        //    graphics.DrawString(item.ItemValue, item.FontStyle, new SolidBrush(item.FontColor),
+                        //        rectangle, format);
+                        //}
+                        //else
+                        //{
+                        //    var x = 2 + (imageWidthInPixels - textSize.Width) / 2;
+                        //    location.X = (int)x;
+                        //    graphics.DrawString(item.ItemValue, item.FontStyle, new SolidBrush(item.FontColor),
+                        //        location);
+                        //}
+
                     }
 
                     if (this.IncludeImage && this.DPPaintItem.ProfilePicture != null)
                     {
                         graphics.DrawImage(this.DPPaintItem.ProfilePicture, this.DPPaintItem.X, this.DPPaintItem.Y, this.DPPaintItem.Width, this.DPPaintItem.Height);
                     }
+                    this.pictureBox_Badge.Image = tempBitmap;
                 }
-                this.pictureBox_Badge.Image = bitmap;
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message + ex.StackTrace);
             }
         }
+
 
         private SizeF GetTextSize(string itemValue, Font fontStyle)
         {
@@ -316,6 +350,28 @@ namespace BadgeDesigner
         private void checkBox_ShowPhoto_CheckedChanged(object sender, EventArgs e)
         {
             this.UpdateImage();
+        }
+
+        private void Button_ChangeBackgroundImage_Click(object sender, EventArgs e)
+        {
+            using (var openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.Filter = "Image Files|*.png;*.jpg;*.jpeg;*.bmp;*.gif;*.tff";
+                var result =openFileDialog.ShowDialog();
+                if(result == DialogResult.OK)
+                {
+                    try
+                    {
+                        var selectedImage = Image.FromFile(openFileDialog.FileName);
+                        this.OriginalImage = selectedImage;
+                        this.UpdateImage();
+                    }
+                    catch(Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, "An error occured", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
         }
     }
 }

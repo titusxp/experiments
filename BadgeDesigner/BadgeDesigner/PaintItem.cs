@@ -32,6 +32,8 @@ namespace BadgeDesigner
         public Color FontColor { get; set; } = Color.Black;
         public string FontName => this.FontStyle?.Name;
 
+        public virtual bool WrapText { get; set; }  = false;
+
         public string[] ItemsList { get; set; }
         public Point Location => new Point(this.X,  this.Y);
     }
@@ -44,6 +46,7 @@ namespace BadgeDesigner
         {
             this.PaintedItemType = PaintedItemTypes.ProfilePicture;
         }
+        public override bool WrapText { get { return false; } set { } }
 
         public int Width { get; set; }
         public int Height { get; set; }
