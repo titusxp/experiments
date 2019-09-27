@@ -40,7 +40,7 @@ namespace CopySqlServerToPostgresql
         /// <summary>
         /// SQL Server db name.
         /// </summary>
-        public static string Catalog = "DamaCloud";
+        public static string Catalog = "DamaServer";
 
         /// <summary>
         /// PostgreSQL db name (in lower case).
@@ -88,6 +88,16 @@ namespace CopySqlServerToPostgresql
         /// <param name="args">Expects at least one catalog name, and optional PostgreSQL catalog name as second argument.</param>
         static int Main(string[] args)
         {
+            Console.WriteLine("Welcome. This application copies both the schema and data of an existing" +
+                "SQL Server database to a postgre database. If the postgre database already exists," +
+                "it is dropped and recreted");
+
+            Console.Write("Please provide database name [default: DamaServer]: ");
+            var data = Console.ReadLine();
+            if(!string.IsNullOrWhiteSpace(data))
+            {
+                Catalog = data;
+            }
             Stopwatch stopWatch1 = new Stopwatch();
 
 #if DEBUG
@@ -306,15 +316,6 @@ namespace CopySqlServerToPostgresql
 
                     if (msConnection.State == ConnectionState.Open)
                     {
-                        //// Get the Meta Data for Supported Schema Collections
-                        //DataTable metaDataTable = msConnection.GetSchema("MetaDataCollections");
-
-                        //// Get the schema information of Databases in your instance
-                        //DataTable databasesSchemaTable = msConnection.GetSchema("Databases");
-
-                        //// Get schema information of all the tables in current database;
-                        //DataTable allTablesSchemaTable = msConnection.GetSchema("Tables");
-
                         // Get only tables, not views.
                         // https://msdn.microsoft.com/en-us/library/ms254969(v=vs.110).aspx
                         DataTable dt = msConnection.GetSchema("Tables", new string[] { null, null, null, "BASE TABLE" });
@@ -698,7 +699,7 @@ namespace CopySqlServerToPostgresql
             {
                 string fieldCreate;
                 schema = rowColumn["table_schema"].ToString();
-                string columnName = rowColumn["column_name"].ToString();
+                string columnName = rowColumn["column_name"].ToString().CapitalizeFirstLetter();
                 string datatype = rowColumn["data_type"].ToString();
                 string charlen = rowColumn["character_maximum_length"].ToString();
                 string nullable = rowColumn["is_nullable"].ToString();
@@ -1242,6 +1243,14 @@ SELECT base_schema_name, base_table_name, constraint_name, base_column_name, uni
                     command.ExecuteNonQuery();
                 }
             }
+        }
+    }
+
+    public static class Extension
+    {
+        public static string CapitalizeFirstLetter(this string text)
+        {
+            return text.First().ToString().ToUpper() + string.Join("", text.Skip(1));
         }
     }
 }
