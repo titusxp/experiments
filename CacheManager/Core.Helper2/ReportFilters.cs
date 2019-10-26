@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MongoDB.Bson;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -259,11 +260,13 @@ namespace Core.Helper2
                    && Sex == otherFilter.Sex
                    && (MinAge.HasValue == false && otherFilter.MinAge.HasValue == false || MinAge == otherFilter.MinAge)
                    && (MaxAge.HasValue == false && otherFilter.MaxAge.HasValue == false || MaxAge == otherFilter.MaxAge)
-                   && (SiteCodes.Any() == false
-                        && otherFilter.SiteCodes.Any() == false
-                        || SiteCodes.All(s => otherFilter.SiteCodes.Any(ss => ss == s)
-                                                   && SiteCodes.Count == otherFilter.SiteCodes.Count));
+                   && ((SiteCodes.Any() == false && otherFilter.SiteCodes.Any() == false)
+                     || (SiteCodes.All(s => otherFilter.SiteCodes.Any(ss => ss == s) && SiteCodes.Count == otherFilter.SiteCodes.Count)));
         }
+        public ReportTypes ReportType { get; set; }
+        public string ReportUrl { get; set; }
+        public ObjectId ReportCacheId { get; set; }
+        
     }
 
     public class ArtOutcomeFilter : ReportFilter

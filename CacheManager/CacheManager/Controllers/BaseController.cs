@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
 using Repository.Interfaces;
 
 namespace CacheManager.Controllers
@@ -27,7 +28,7 @@ namespace CacheManager.Controllers
             //        {
             //        },
             //        Status = Core.Helper2.ReportStatus.Completed,
-            //        TaskId = Guid.NewGuid(),
+            //        TaskId = ObjectId.GenerateNewId(),
             //    },
             //    new DataModels.Entities.CachedReport
             //    {
@@ -36,7 +37,7 @@ namespace CacheManager.Controllers
             //        {
             //        },
             //        Status = Core.Helper2.ReportStatus.Completed,
-            //        TaskId = Guid.NewGuid(),
+            //        TaskId = ObjectId.GenerateNewId(),
             //    },
             //    new DataModels.Entities.CachedReport
             //    {
@@ -45,7 +46,7 @@ namespace CacheManager.Controllers
             //        {
             //        },
             //        Status = Core.Helper2.ReportStatus.Completed,
-            //        TaskId = Guid.NewGuid(),
+            //        TaskId = ObjectId.GenerateNewId(),
             //    },
             //    new DataModels.Entities.CachedReport
             //    {
@@ -54,7 +55,7 @@ namespace CacheManager.Controllers
             //        {
             //        },
             //        Status = Core.Helper2.ReportStatus.Completed,
-            //        TaskId = Guid.NewGuid(),
+            //        TaskId = ObjectId.GenerateNewId(),
             //    },
             //};
             //foreach (var report in cachedReports)
@@ -62,8 +63,6 @@ namespace CacheManager.Controllers
             //    repo.Add(report);
             //}
 
-            //var everything = Repository.GetAll().ToList();
-            //return everything;
 
             return Repository.GetAll();
         }

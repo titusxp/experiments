@@ -1,5 +1,6 @@
 ﻿using Database;
 using Database.Dama.Test.Console;
+using DataModels.Entities;
 using Microsoft.Extensions.DependencyInjection;
 using Repository.Interfaces;
 using System;
