@@ -11,10 +11,7 @@ export class EmployeeServiceService {
       { "id": 3, "age": 23, "name": "Timothy Mbam" },
       { "id": 4, "age": 23, "name": "David Yusinyu" },
       { "id": 5, "age": 23, "name": "Evaristus Namdi" },
-      { "id": 6, "age": 23, "name"
-@Injectable({
-        providedIn: 'root'
-      }): "Titus Nicodemus" },
+      { "id": 6, "age": 23, "name": "Titus Nicodemus" },
     ];
   }
 }
