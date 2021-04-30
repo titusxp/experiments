@@ -2,4 +2,6 @@
 <h1>Employees</h1>
 
 {{errorMsg}}
-<p *ngFor="let e of employees">{{e.name}}</p>
+<p href="/" *ngFor="let e of employees" (click)="onSelect(e)">
+  {{e.id}} - {{e.name}} <br/>
+</p>

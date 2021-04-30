@@ -5,13 +5,14 @@ import { EmployeeListComponent } from './employee-list/employee-list.component';
 import { EmployeeDetailComponent } from './employee-detail/employee-detail.component';
 import { EmployeeServiceService } from './employee-service.service';
 import { HttpClientModule } from '@angular/common/http';
-import { AppRoutingModule } from './app.routing.module';
+import { AppRoutingModule, routingComponents } from './app.routing.module';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    EmployeeListComponent,
-    EmployeeDetailComponent,
+    routingComponents,
+    PageNotFoundComponent,
 
   ],
   imports: [
@@ -23,4 +24,3 @@ import { AppRoutingModule } from './app.routing.module';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
-export const routingComponents = [EmployeeDetailComponent, EmployeeListComponent]

@@ -1,4 +1,6 @@
 
 <h1>Employee Details </h1>
-{{errorMsg}}
-<p *ngFor="let e of employees">{{e.id}} -- {{e.name}} -- {{e.age}}</p>
+You have selected employee with id = {{employeeId}}
+
+<a (click)="goPrevious()">Previous</a> |
+<a (click)="goNext()">Next</a>
