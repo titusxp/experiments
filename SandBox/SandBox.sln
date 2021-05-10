@@ -1,9 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31205.134
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsApplication1", "WindowsFormsApplication1\WindowsFormsApplication1.csproj", "{E122EEF9-55F3-43A4-9242-CEBFC1A48605}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealthChecker", "HealthChecker\HealthChecker.csproj", "{8EA508C3-3E4B-4A90-A074-774D3B871B39}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealthChecksProject", "HealthChecksProject\HealthChecksProject.csproj", "{0B8B9CB1-3B1B-4F2C-99F1-BB975B1CE526}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,8 +19,19 @@ Global
 		{E122EEF9-55F3-43A4-9242-CEBFC1A48605}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E122EEF9-55F3-43A4-9242-CEBFC1A48605}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E122EEF9-55F3-43A4-9242-CEBFC1A48605}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8EA508C3-3E4B-4A90-A074-774D3B871B39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EA508C3-3E4B-4A90-A074-774D3B871B39}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8EA508C3-3E4B-4A90-A074-774D3B871B39}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8EA508C3-3E4B-4A90-A074-774D3B871B39}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B8B9CB1-3B1B-4F2C-99F1-BB975B1CE526}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B8B9CB1-3B1B-4F2C-99F1-BB975B1CE526}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B8B9CB1-3B1B-4F2C-99F1-BB975B1CE526}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B8B9CB1-3B1B-4F2C-99F1-BB975B1CE526}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A0130D03-108C-4F91-9F96-A414EE03854B}
 	EndGlobalSection
 EndGlobal
