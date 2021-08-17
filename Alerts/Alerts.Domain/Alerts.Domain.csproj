@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Alerts.Domain.Contracts\Alerts.Domain.Contracts.csproj" />
+    <ProjectReference Include="..\Alerts.Repository.Contracts\Alerts.Repository.Contracts.csproj" />
+    <ProjectReference Include="..\Core.System\Core.System.csproj" />
+  </ItemGroup>
+
+</Project>
