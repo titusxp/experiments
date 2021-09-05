@@ -285,6 +285,8 @@ namespace HBPP
                         <h5 style='text-align: center; margin: 0px;font-size: 10pt'>P O Box 01-NKWEN BAMENDA</h5>
                         <h5 style='text-align: center; margin: 0px;font-size: 10pt'>TEL: 699636342 - 677318383 - 674416300</h5>
                         <h5 style='text-align: center; margin: 0px;'>Email: cbchshbpp@yahoo.com</h5>
+                        <h5 style='text-align: center; margin: 0px;'>{item.} interest on contributions</h5>
+
                         <p style='text-align: center; margin: 0px;font-size: 8pt;'>Station: {item?.Station}</p>
                         <hr />
                         <table id='summaryTable' style='font-size: 12pt;width:100%; margin:auto; border:solid black 1px'>
@@ -335,6 +337,45 @@ namespace HBPP
                     </div>";
 
             return html;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            ToggleWaiting(showWaitForm: true);
+            var items = this.Items.GroupBy(i => i.Station);
+
+            Action start = () =>
+            {
+                var html = @"
+                            <html>
+                                <head>
+                                    <title>Summaries</title>
+                                    <link rel='stylesheet' href='../site.css' />
+                                </head>
+                                <body>";
+                foreach (var item in items)
+                {
+                    var vals = item.Select(i => i).OrderBy(i => i.EmployeeName).ToList();
+                    html += GenerateSummaryHtml(vals);
+                }
+
+                html += @"
+                                </body>
+                            <html>";
+
+
+                Action end = () =>
+                {
+                    ReportPrinter.PrintReport(html);
+
+                    ToggleWaiting(showWaitForm: false);
+                };
+
+                this.Invoke(end);
+            };
+
+
+            start.BeginInvoke(null, null);
         }
     }
 }
