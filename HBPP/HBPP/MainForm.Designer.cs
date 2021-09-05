@@ -39,7 +39,7 @@ namespace HBPP
             this.button1 = new System.Windows.Forms.Button();
             this.flowLayoutPanel_Buttons = new System.Windows.Forms.FlowLayoutPanel();
             this.button2 = new System.Windows.Forms.Button();
-            this.loadingCircle1 = new HBPP.LoadingCircle();
+            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.codeDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.employeeNameDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.accountNumberDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -49,8 +49,6 @@ namespace HBPP
             this.stationDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.totalDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.printItemBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.flowLayoutPanel_Buttons.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.printItemBindingSource)).BeginInit();
@@ -102,11 +100,11 @@ namespace HBPP
             this.stationDataGridViewTextBoxColumn1,
             this.totalDataGridViewTextBoxColumn});
             this.dataGridView.DataSource = this.printItemBindingSource;
-            this.dataGridView.Location = new System.Drawing.Point(1, 65);
-            this.dataGridView.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dataGridView.Location = new System.Drawing.Point(1, 34);
+            this.dataGridView.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridView.Name = "dataGridView";
             this.dataGridView.RowHeadersWidth = 51;
-            this.dataGridView.Size = new System.Drawing.Size(1149, 566);
+            this.dataGridView.Size = new System.Drawing.Size(1272, 602);
             this.dataGridView.TabIndex = 4;
             // 
             // button1
@@ -128,10 +126,11 @@ namespace HBPP
             this.flowLayoutPanel_Buttons.Controls.Add(this.button_GeneratePrintout);
             this.flowLayoutPanel_Buttons.Controls.Add(this.button1);
             this.flowLayoutPanel_Buttons.Controls.Add(this.button2);
-            this.flowLayoutPanel_Buttons.Location = new System.Drawing.Point(4, 33);
+            this.flowLayoutPanel_Buttons.Controls.Add(this.dateTimePicker1);
+            this.flowLayoutPanel_Buttons.Location = new System.Drawing.Point(2, 2);
             this.flowLayoutPanel_Buttons.Margin = new System.Windows.Forms.Padding(0);
             this.flowLayoutPanel_Buttons.Name = "flowLayoutPanel_Buttons";
-            this.flowLayoutPanel_Buttons.Size = new System.Drawing.Size(1146, 31);
+            this.flowLayoutPanel_Buttons.Size = new System.Drawing.Size(1269, 31);
             this.flowLayoutPanel_Buttons.TabIndex = 5;
             // 
             // button2
@@ -145,22 +144,12 @@ namespace HBPP
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
-            // loadingCircle1
+            // dateTimePicker1
             // 
-            this.loadingCircle1.Active = false;
-            this.loadingCircle1.Color = System.Drawing.Color.DarkGray;
-            this.loadingCircle1.InnerCircleRadius = 5;
-            this.loadingCircle1.Location = new System.Drawing.Point(262, 3);
-            this.loadingCircle1.Margin = new System.Windows.Forms.Padding(0);
-            this.loadingCircle1.Name = "loadingCircle1";
-            this.loadingCircle1.NumberSpoke = 12;
-            this.loadingCircle1.OuterCircleRadius = 11;
-            this.loadingCircle1.RotationSpeed = 100;
-            this.loadingCircle1.Size = new System.Drawing.Size(43, 28);
-            this.loadingCircle1.SpokeThickness = 2;
-            this.loadingCircle1.StylePreset = HBPP.LoadingCircle.StylePresets.MacOSX;
-            this.loadingCircle1.TabIndex = 2;
-            this.loadingCircle1.Text = "loadingCircle1";
+            this.dateTimePicker1.Location = new System.Drawing.Point(688, 3);
+            this.dateTimePicker1.Name = "dateTimePicker1";
+            this.dateTimePicker1.Size = new System.Drawing.Size(200, 22);
+            this.dateTimePicker1.TabIndex = 6;
             // 
             // codeDataGridViewTextBoxColumn1
             // 
@@ -239,41 +228,21 @@ namespace HBPP
             // 
             this.printItemBindingSource.DataSource = typeof(HBPP.PrintItem);
             // 
-            // dateTimePicker1
-            // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(59, 5);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(200, 22);
-            this.dateTimePicker1.TabIndex = 6;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(1, 6);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(38, 17);
-            this.label2.TabIndex = 7;
-            this.label2.Text = "Date";
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1150, 631);
-            this.Controls.Add(this.loadingCircle1);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.dateTimePicker1);
+            this.ClientSize = new System.Drawing.Size(1273, 636);
             this.Controls.Add(this.flowLayoutPanel_Buttons);
             this.Controls.Add(this.dataGridView);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MainForm";
             this.Load += new System.EventHandler(this.MainForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
             this.flowLayoutPanel_Buttons.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.printItemBindingSource)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -282,7 +251,6 @@ namespace HBPP
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.BindingSource printItemBindingSource;
         private System.Windows.Forms.Button button_GeneratePrintout;
-        private LoadingCircle loadingCircle1;
         private DataGridView dataGridView;
         private System.Windows.Forms.DataGridViewTextBoxColumn codeDataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn employeeNameDataGridViewTextBoxColumn1;
@@ -296,7 +264,6 @@ namespace HBPP
         private FlowLayoutPanel flowLayoutPanel_Buttons;
         private Button button2;
         private DateTimePicker dateTimePicker1;
-        private Label label2;
     }
 }
 

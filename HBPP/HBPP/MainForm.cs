@@ -103,7 +103,6 @@ namespace HBPP
 
             var html = "<table style='width:720px;page-break-inside:auto; margin:auto; position: static; overflow: visible; display: block'>";
 
-            Action<string> callBack = ShowProgress;
             Action start = () =>
             {
                 var i = 1;
@@ -121,7 +120,6 @@ namespace HBPP
                         html += $"<td style='border:solid black;'>{span}</td></tr>";
                     }
 
-                    callBack.Invoke(string.Format("{0} / {1}", i, count));
                     i++;
                 }
                 html += "</table>";
@@ -138,22 +136,6 @@ namespace HBPP
 
         }
 
-        private void ShowProgress(string progressMessage)
-        {
-            Action showData = () =>
-            {
-                this.label1.Text = progressMessage;
-            };
-            try
-            {
-                this.Invoke(showData);
-            }
-            catch (Exception ex)
-            {
-
-            }
-            
-        }
 
         //public string ToBase64(Image image)
         //{
@@ -168,6 +150,7 @@ namespace HBPP
         //    }
         //}
 
+        private DateTime DateTime => this.dateTimePicker1.Value;
         private string GenerateReportHtml(PrintItem item, string cbcLogo, string hbppLogo, string signature)
         {
             var html = $@"
@@ -176,7 +159,7 @@ namespace HBPP
                             <img src='../{hbppLogo}' style='width:50px; float:right'>
                             <h4 style='text-align: center; margin: 0px;'>Health Board Pension Plan</h4>
                             <h5 style='text-align: center; margin: 0px;font-size: 10pt'>699636342 - 677318383 - 674416300</h5>
-                            <h5 style='text-align: center; margin: 0px;'>June 30, 2019 Deductions</h5>
+                            <h5 style='text-align: center; margin: 0px;'>{DateTime: MMM dd, yyyy} Deductions</h5>
                             <p style='text-align: center; margin: 0px;font-size: 8pt;'>{item.Station}</p>
                             <hr />
                             <table style='font-size: 12pt;width: 300px;margin:auto; border:0px'>
@@ -228,8 +211,7 @@ namespace HBPP
 
         private void ToggleWaiting(bool showWaitForm)
         {
-            this.flowLayoutPanel_Buttons.Enabled = !showWaitForm;
-            this.flowLayoutPanel_WaitForms.Visible = this.loadingCircle1.Active = showWaitForm;
+            //this.flowLayoutPanel_Buttons.Enabled = !showWaitForm;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -285,8 +267,7 @@ namespace HBPP
                         <h5 style='text-align: center; margin: 0px;font-size: 10pt'>P O Box 01-NKWEN BAMENDA</h5>
                         <h5 style='text-align: center; margin: 0px;font-size: 10pt'>TEL: 699636342 - 677318383 - 674416300</h5>
                         <h5 style='text-align: center; margin: 0px;'>Email: cbchshbpp@yahoo.com</h5>
-                        <h5 style='text-align: center; margin: 0px;'>{item.} interest on contributions</h5>
-
+                        <h5 style='text-align: center; margin: 0px;'>{DateTime: yyyy} Interest on Contributions</h5>
                         <p style='text-align: center; margin: 0px;font-size: 8pt;'>Station: {item?.Station}</p>
                         <hr />
                         <table id='summaryTable' style='font-size: 12pt;width:100%; margin:auto; border:solid black 1px'>
@@ -294,9 +275,7 @@ namespace HBPP
                                    <th>NO:</th> 
                                    <th>CODE</th> 
                                    <th>MEMBER'S NAME</th> 
-                                   <th>LOAN</th> 
-                                   <th>Contribution</th> 
-                                   <th>TOTAL</th> 
+                                   <th>INTEREST</th> 
                                 </tr>";
 
                                 var x = 1;
@@ -306,23 +285,19 @@ namespace HBPP
                                     <tr>
                                        <td>{x}</td> 
                                        <td>{i.Code}</td> 
-                                       <td>{i.EmployeeName}</td> 
-                                       <td style = 'text-align:right;'>{String.Format("{0:n0}", i.Loan)}</td> 
-                                       <td style = 'text-align:right;'>{String.Format("{0:n0}", i.Contribution)}</td> 
-                                       <td style = 'text-align:right;'>{String.Format("{0:n0}", i.Total)}</td> 
+                                       <td>{i.EmployeeName}</td>  
+                                       <td style = 'text-align:right;'>{String.Format("{0:n0}", i.Interest)}</td> 
                                     </tr>";
                                     x++;
                                 }
 
                             var totalLoan = items.Sum(ii => ii.Loan);
                             var totalContribution = items.Sum(ii => ii.Contribution);
-                            var totalTotal = items.Sum(ii => ii.Total);
+                            var totalTotal = items.Sum(ii => ii.Interest);
 
                             html += $@"
                                     <tr>
                                        <td colspan='3' style = 'text-align:right;'>Total</td> 
-                                       <td style = 'text-align:right;'>{String.Format("{0:n0}", totalLoan)}</td> 
-                                       <td style = 'text-align:right;'>{String.Format("{0:n0}", totalContribution)}</td> 
                                        <td style = 'text-align:right;'>{String.Format("{0:n0}", totalTotal)}</td> 
                                     </tr>
                         </table>
