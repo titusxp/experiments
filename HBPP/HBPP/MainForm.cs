@@ -216,6 +216,7 @@ namespace HBPP
 
         private void button1_Click(object sender, EventArgs e)
         {
+            
             ToggleWaiting(showWaitForm: true);
             var items = this.Items.GroupBy(i => i.Station);
 
@@ -253,7 +254,77 @@ namespace HBPP
             start.BeginInvoke(null, null);
         }
 
+
         private string GenerateSummaryHtml(List<PrintItem> items)
+        {
+            var cbcLogo = "cbchs.png";
+            var hbppLogo = "hbpp.jpeg";
+            var item = items.FirstOrDefault();
+            var html =
+                $@"
+                    <div style='width:800px; padding: 5px; margin:auto;'>
+                        <img src='../{cbcLogo}' style='width:80px; float:left'>
+                        <img src='../{hbppLogo}' style='width:80px; float:right'>
+                        <h4 style='text-align: center; margin: 0px;'>HEALTH BOARD PENSION PLAN</h4>
+                        <h5 style='text-align: center; margin: 0px;font-size: 10pt'>P O Box 01-NKWEN BAMENDA</h5>
+                        <h5 style='text-align: center; margin: 0px;font-size: 10pt'>TEL: 699636342 - 677318383 - 674416300</h5>
+                        <h5 style='text-align: center; margin: 0px;'>Email: cbchshbpp@yahoo.com</h5>
+                        <h5 style='text-align: center; margin: 0px;'>{DateTime: yyyy} interest on contributions</h5>
+
+                        <p style='text-align: center; margin: 0px;font-size: 8pt;'>Station: {item?.Station}</p>
+                        <hr />
+                        <table id='summaryTable' style='font-size: 12pt;width:100%; margin:auto; border:solid black 1px'>
+    	                    <tr>
+                                   <th>NO:</th> 
+                                   <th>CODE</th> 
+                                   <th>MEMBER'S NAME</th> 
+                                   <th>LOAN</th> 
+                                   <th>Contribution</th> 
+                                   <th>TOTAL</th> 
+                                </tr>";
+
+            var x = 1;
+            foreach (var i in items)
+            {
+                html += $@"
+                                    <tr>
+                                       <td>{x}</td> 
+                                       <td>{i.Code}</td> 
+                                       <td>{i.EmployeeName}</td> 
+                                       <td style = 'text-align:right;'>{String.Format("{0:n0}", i.Loan)}</td> 
+                                       <td style = 'text-align:right;'>{String.Format("{0:n0}", i.Contribution)}</td> 
+                                       <td style = 'text-align:right;'>{String.Format("{0:n0}", i.Total)}</td> 
+                                    </tr>";
+                x++;
+            }
+
+            var totalLoan = items.Sum(ii => ii.Loan);
+            var totalContribution = items.Sum(ii => ii.Contribution);
+            var totalTotal = items.Sum(ii => ii.Total);
+
+            html += $@"
+                                    <tr>
+                                       <td colspan='3' style = 'text-align:right;'>Total</td> 
+                                       <td style = 'text-align:right;'>{String.Format("{0:n0}", totalLoan)}</td> 
+                                       <td style = 'text-align:right;'>{String.Format("{0:n0}", totalContribution)}</td> 
+                                       <td style = 'text-align:right;'>{String.Format("{0:n0}", totalTotal)}</td> 
+                                    </tr>
+                        </table>
+                        <br/><br/>
+                        <table style='width:100%;border:none;'>
+                            <tr>
+                                <td>Prepared By:</td>
+                                <td>Checked By:</td>
+                                <td>Paid By:</td>
+                            </tr>
+                        </table>
+                        <div style='height:50px;'></div>
+                    </div>";
+
+            return html;
+        }
+
+        private string GenerateInterestSummaryHtml(List<PrintItem> items)
         {
             var cbcLogo = "cbchs.png";
             var hbppLogo = "hbpp.jpeg";
@@ -276,6 +347,7 @@ namespace HBPP
                                    <th>CODE</th> 
                                    <th>MEMBER'S NAME</th> 
                                    <th>INTEREST</th> 
+                                   <th>SIGNATURE</th> 
                                 </tr>";
 
                                 var x = 1;
@@ -287,6 +359,7 @@ namespace HBPP
                                        <td>{i.Code}</td> 
                                        <td>{i.EmployeeName}</td>  
                                        <td style = 'text-align:right;'>{String.Format("{0:n0}", i.Interest)}</td> 
+                                       <td></td> 
                                     </tr>";
                                     x++;
                                 }
@@ -299,6 +372,7 @@ namespace HBPP
                                     <tr>
                                        <td colspan='3' style = 'text-align:right;'>Total</td> 
                                        <td style = 'text-align:right;'>{String.Format("{0:n0}", totalTotal)}</td> 
+                                       <td></td> 
                                     </tr>
                         </table>
                         <br/><br/>
@@ -306,6 +380,7 @@ namespace HBPP
                             <tr>
                                 <td>Prepared By:</td>
                                 <td>Checked By:</td>
+                                <td>Paid By:</td>
                             </tr>
                         </table>
                         <div style='height:50px;'></div>
@@ -331,7 +406,7 @@ namespace HBPP
                 foreach (var item in items)
                 {
                     var vals = item.Select(i => i).OrderBy(i => i.EmployeeName).ToList();
-                    html += GenerateSummaryHtml(vals);
+                    html += GenerateInterestSummaryHtml(vals);
                 }
 
                 html += @"

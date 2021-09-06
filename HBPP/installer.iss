@@ -2,8 +2,8 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "HBPP "
-#define MyAppVersion "19.07.05"
-#define MyAppOutputFileName "HBPP 19.07.05"
+#define MyAppVersion "21.09.05"
+#define MyAppOutputFileName "HBPP 21.09.05"
 #define MyAppPublisher "CBC Health Services"
 #define MyAppURL "http://www.cbchealthservices.org/"
 #define MyAppExeName "HBPP.exe"
@@ -23,10 +23,10 @@ AppUpdatesURL={#MyAppURL}
 DefaultDirName={pf}\{#MyAppName}
 DisableDirPage=yes
 DisableProgramGroupPage=yes
-LicenseFile=D:\Code\dama-monitoring-evaluation\Inno Setup 5\License.rtf
+LicenseFile=C:\Code\dama-monitoring-evaluation\Inno Setup 5\License.rtf
 OutputDir=D:\DAMA\Releases
 OutputBaseFilename={#MyAppOutputFileName}
-SetupIconFile=D:\Code\Experiments\experiments\HBPP\HBPP\hbpp_dC1_icon.ico
+SetupIconFile=C:\Code\experiments\HBPP\HBPP\hbpp_dC1_icon.ico
 Compression=lzma
 SolidCompression=yes
 
@@ -39,8 +39,8 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked; OnlyBelowVersion: 0,6.1
 
 [Files]
-Source: "D:\Code\Experiments\experiments\HBPP\HBPP\bin\Debug\hbpp.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Code\Experiments\experiments\HBPP\HBPP\bin\Debug\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\Code\experiments\HBPP\HBPP\bin\Debug\hbpp.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Code\experiments\HBPP\HBPP\bin\Debug\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
