@@ -91,7 +91,7 @@ namespace HBPP
             GenerateReportPrintOut(items);
         }
 
-        private void GenerateReportPrintOut(List<PrintItem> items)
+        private void GenerateReportPrintOut(List<PrintItem> items, bool isInterestPrintout = false)
         {
 
             var cbchsLogoStream = "cbchs.png";
@@ -109,7 +109,8 @@ namespace HBPP
                 var count = items.Count();
                 foreach (var item in items)
                 {
-                    var span = GenerateReportHtml(item, cbchsLogoStream, hbppLogoStream, signatureStream);
+                    var span = isInterestPrintout ? GenerateInterestReportHtml (item, cbchsLogoStream, hbppLogoStream, signatureStream):
+                        GenerateReportHtml(item, cbchsLogoStream, hbppLogoStream, signatureStream);
 
                     if (i % 2 != 0)
                     {
@@ -151,6 +152,9 @@ namespace HBPP
         //}
 
         private DateTime DateTime => this.dateTimePicker1.Value;
+
+        
+
         private string GenerateReportHtml(PrintItem item, string cbcLogo, string hbppLogo, string signature)
         {
             var html = $@"
@@ -426,6 +430,63 @@ namespace HBPP
 
 
             start.BeginInvoke(null, null);
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            var items = this.Items.OrderBy(i => i.Station).ThenBy(i => i.EmployeeName).ToList();
+            GenerateReportPrintOut(items, isInterestPrintout:true);
+        }
+
+
+        private string GenerateInterestReportHtml(PrintItem item, string cbcLogo, string hbppLogo, string signature)
+        {
+            var html = $@"
+                        <div style='width:350px; padding: 5px;'>
+                            <img src='../{cbcLogo}' style='width:50px; float:left'>
+                            <img src='../{hbppLogo}' style='width:50px; float:right'>
+                            <h4 style='text-align: center; margin: 0px;'>Health Board Pension Plan</h4>
+                            <h5 style='text-align: center; margin: 0px;font-size: 10pt'>699636342 - 677318383 - 674416300</h5>
+                            <h5 style='text-align: center; margin: 0px;'>{DateTime: yyyy} Interest on Contributions</h5>
+                            <p style='text-align: center; margin: 0px;font-size: 8pt;'>{item.Station}</p>
+                            <hr />
+                            <table style='font-size: 12pt;width: 300px;margin:auto; border:0px'>
+    		                        <tr>
+    			                        <td colspan='2'> {item.EmployeeName}</td>
+    		                        </tr>
+    		                        <tr>
+    			                        <td>Interest:</td>
+    			                        <td style = 'text-align:right;'> {String.Format("{0:n0}", item.Interest)} FCFA</td>
+    		                        </tr>
+    		                        <tr style='padding:5px'>
+    			                        <td>
+                                            <div style='position: relative;'>
+                                            <img src = '../black.png' style = 'width: 100%;height:20px' />
+                                            <div style = 'position: absolute; top: 0px; left: 0px;' >
+                                                    Total:   
+                                            </div>
+                                        </div >
+                                        </td>
+    			                        <td> 
+                                            <div style='position: relative;'>
+                                                <img src = '../black.png' style = 'width: 100%;height:20px' />
+                                                <div style = 'width: 100%;text-align:right; position: absolute; top: 0px; left: 0px;' >
+                                                    {String.Format("{0:n0}", item.Interest)} FCFA    
+                                                </div>
+                                            </div >
+                                        </td>
+    		                        </tr>
+                                    <tr>
+    			                        <td>Sign:</td>
+    			                        <td>
+                                            <img src='../{signature}' style='height:30px;width:100px'><br/>
+    				                        <span style='font-size:10pt;font-style: italic'>HBPP Manager</span>
+				                        </td>
+    		                        </tr>
+    	                        </table>
+                        </div>
+                        ";
+            return html;
         }
     }
 }
