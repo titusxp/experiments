@@ -79,6 +79,12 @@
     <Compile Include="ReportPrinterWindow.Designer.cs">
       <DependentUpon>ReportPrinterWindow.cs</DependentUpon>
     </Compile>
+    <None Include="Resources\ExcelLogoSmall.scale-100.png" />
+    <None Include="Resources\FileExcel32x32.png" />
+    <None Include="Resources\document-quickprint-5.png" />
+    <None Include="Resources\Tile-Icon-PrintDocs.png" />
+    <None Include="Resources\ic_receipt.png" />
+    <None Include="Resources\CommentsSummary.png" />
     <Content Include="site.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -95,6 +101,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="ReportPrinterWindow.resx">
       <DependentUpon>ReportPrinterWindow.cs</DependentUpon>

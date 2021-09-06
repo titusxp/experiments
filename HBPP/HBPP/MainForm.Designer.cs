@@ -32,10 +32,16 @@ namespace HBPP
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.button_Import = new System.Windows.Forms.Button();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.button_GeneratePrintout = new System.Windows.Forms.Button();
             this.dataGridView = new System.Windows.Forms.DataGridView();
+            this.flowLayoutPanel_Buttons = new System.Windows.Forms.FlowLayoutPanel();
+            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.button_Import = new System.Windows.Forms.Button();
+            this.button_GeneratePrintout = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             this.codeDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.employeeNameDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.accountNumberDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -45,43 +51,16 @@ namespace HBPP
             this.stationDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.totalDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.printItemBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.button1 = new System.Windows.Forms.Button();
-            this.flowLayoutPanel_Buttons = new System.Windows.Forms.FlowLayoutPanel();
-            this.button2 = new System.Windows.Forms.Button();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.button3 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.printItemBindingSource)).BeginInit();
             this.flowLayoutPanel_Buttons.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.printItemBindingSource)).BeginInit();
             this.SuspendLayout();
-            // 
-            // button_Import
-            // 
-            this.button_Import.Location = new System.Drawing.Point(0, 0);
-            this.button_Import.Margin = new System.Windows.Forms.Padding(0);
-            this.button_Import.Name = "button_Import";
-            this.button_Import.Size = new System.Drawing.Size(161, 28);
-            this.button_Import.TabIndex = 1;
-            this.button_Import.Text = "Import Data";
-            this.button_Import.UseVisualStyleBackColor = true;
-            this.button_Import.Click += new System.EventHandler(this.button_Import_Click);
             // 
             // openFileDialog
             // 
             this.openFileDialog.DefaultExt = "xlsx";
             this.openFileDialog.FileName = "openFileDialog";
             this.openFileDialog.Filter = "Excel Files|*.xlsx;*.xls;*csv";
-            // 
-            // button_GeneratePrintout
-            // 
-            this.button_GeneratePrintout.Location = new System.Drawing.Point(161, 0);
-            this.button_GeneratePrintout.Margin = new System.Windows.Forms.Padding(0);
-            this.button_GeneratePrintout.Name = "button_GeneratePrintout";
-            this.button_GeneratePrintout.Size = new System.Drawing.Size(161, 28);
-            this.button_GeneratePrintout.TabIndex = 1;
-            this.button_GeneratePrintout.Text = "Generate Printout";
-            this.button_GeneratePrintout.UseVisualStyleBackColor = true;
-            this.button_GeneratePrintout.Click += new System.EventHandler(this.button_GeneratePrintout_Click);
             // 
             // dataGridView
             // 
@@ -101,12 +80,97 @@ namespace HBPP
             this.stationDataGridViewTextBoxColumn1,
             this.totalDataGridViewTextBoxColumn});
             this.dataGridView.DataSource = this.printItemBindingSource;
-            this.dataGridView.Location = new System.Drawing.Point(1, 34);
+            this.dataGridView.Location = new System.Drawing.Point(1, 50);
             this.dataGridView.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridView.Name = "dataGridView";
             this.dataGridView.RowHeadersWidth = 51;
-            this.dataGridView.Size = new System.Drawing.Size(1272, 602);
+            this.dataGridView.Size = new System.Drawing.Size(1272, 586);
             this.dataGridView.TabIndex = 4;
+            // 
+            // flowLayoutPanel_Buttons
+            // 
+            this.flowLayoutPanel_Buttons.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.flowLayoutPanel_Buttons.Controls.Add(this.button_Import);
+            this.flowLayoutPanel_Buttons.Controls.Add(this.button_GeneratePrintout);
+            this.flowLayoutPanel_Buttons.Controls.Add(this.button3);
+            this.flowLayoutPanel_Buttons.Controls.Add(this.button1);
+            this.flowLayoutPanel_Buttons.Controls.Add(this.button2);
+            this.flowLayoutPanel_Buttons.Controls.Add(this.dateTimePicker1);
+            this.flowLayoutPanel_Buttons.Location = new System.Drawing.Point(2, 2);
+            this.flowLayoutPanel_Buttons.Margin = new System.Windows.Forms.Padding(0);
+            this.flowLayoutPanel_Buttons.Name = "flowLayoutPanel_Buttons";
+            this.flowLayoutPanel_Buttons.Size = new System.Drawing.Size(1269, 44);
+            this.flowLayoutPanel_Buttons.TabIndex = 5;
+            this.flowLayoutPanel_Buttons.Paint += new System.Windows.Forms.PaintEventHandler(this.flowLayoutPanel_Buttons_Paint);
+            // 
+            // dateTimePicker1
+            // 
+            this.dateTimePicker1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dateTimePicker1.Location = new System.Drawing.Point(203, 3);
+            this.dateTimePicker1.Name = "dateTimePicker1";
+            this.dateTimePicker1.Size = new System.Drawing.Size(265, 38);
+            this.dateTimePicker1.TabIndex = 6;
+            // 
+            // button_Import
+            // 
+            this.button_Import.Image = global::HBPP.Properties.Resources.FileExcel32x32;
+            this.button_Import.Location = new System.Drawing.Point(0, 0);
+            this.button_Import.Margin = new System.Windows.Forms.Padding(0);
+            this.button_Import.Name = "button_Import";
+            this.button_Import.Size = new System.Drawing.Size(42, 41);
+            this.button_Import.TabIndex = 1;
+            this.toolTip1.SetToolTip(this.button_Import, "Import Excel Sheet");
+            this.button_Import.UseVisualStyleBackColor = true;
+            this.button_Import.Click += new System.EventHandler(this.button_Import_Click);
+            // 
+            // button_GeneratePrintout
+            // 
+            this.button_GeneratePrintout.Image = global::HBPP.Properties.Resources.document_quickprint_5;
+            this.button_GeneratePrintout.Location = new System.Drawing.Point(42, 0);
+            this.button_GeneratePrintout.Margin = new System.Windows.Forms.Padding(0);
+            this.button_GeneratePrintout.Name = "button_GeneratePrintout";
+            this.button_GeneratePrintout.Size = new System.Drawing.Size(39, 41);
+            this.button_GeneratePrintout.TabIndex = 1;
+            this.toolTip1.SetToolTip(this.button_GeneratePrintout, "Generate Printout");
+            this.button_GeneratePrintout.UseVisualStyleBackColor = true;
+            this.button_GeneratePrintout.Click += new System.EventHandler(this.button_GeneratePrintout_Click);
+            // 
+            // button3
+            // 
+            this.button3.Image = global::HBPP.Properties.Resources.Tile_Icon_PrintDocs;
+            this.button3.Location = new System.Drawing.Point(81, 0);
+            this.button3.Margin = new System.Windows.Forms.Padding(0);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(36, 41);
+            this.button3.TabIndex = 7;
+            this.toolTip1.SetToolTip(this.button3, "Generate Interest Printout");
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // button1
+            // 
+            this.button1.Image = global::HBPP.Properties.Resources.ic_receipt;
+            this.button1.Location = new System.Drawing.Point(117, 0);
+            this.button1.Margin = new System.Windows.Forms.Padding(0);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(40, 41);
+            this.button1.TabIndex = 1;
+            this.toolTip1.SetToolTip(this.button1, "Generate Summary");
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // button2
+            // 
+            this.button2.Image = global::HBPP.Properties.Resources.CommentsSummary;
+            this.button2.Location = new System.Drawing.Point(157, 0);
+            this.button2.Margin = new System.Windows.Forms.Padding(0);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(43, 41);
+            this.button2.TabIndex = 2;
+            this.toolTip1.SetToolTip(this.button2, "Generate Interest Summary");
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // codeDataGridViewTextBoxColumn1
             // 
@@ -185,62 +249,6 @@ namespace HBPP
             // 
             this.printItemBindingSource.DataSource = typeof(HBPP.PrintItem);
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(523, 0);
-            this.button1.Margin = new System.Windows.Forms.Padding(0);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(161, 28);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "Generate Summary";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // flowLayoutPanel_Buttons
-            // 
-            this.flowLayoutPanel_Buttons.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.flowLayoutPanel_Buttons.Controls.Add(this.button_Import);
-            this.flowLayoutPanel_Buttons.Controls.Add(this.button_GeneratePrintout);
-            this.flowLayoutPanel_Buttons.Controls.Add(this.button3);
-            this.flowLayoutPanel_Buttons.Controls.Add(this.button1);
-            this.flowLayoutPanel_Buttons.Controls.Add(this.button2);
-            this.flowLayoutPanel_Buttons.Controls.Add(this.dateTimePicker1);
-            this.flowLayoutPanel_Buttons.Location = new System.Drawing.Point(2, 2);
-            this.flowLayoutPanel_Buttons.Margin = new System.Windows.Forms.Padding(0);
-            this.flowLayoutPanel_Buttons.Name = "flowLayoutPanel_Buttons";
-            this.flowLayoutPanel_Buttons.Size = new System.Drawing.Size(1269, 31);
-            this.flowLayoutPanel_Buttons.TabIndex = 5;
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(684, 0);
-            this.button2.Margin = new System.Windows.Forms.Padding(0);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(202, 28);
-            this.button2.TabIndex = 2;
-            this.button2.Text = "Generate Interest Summary";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // dateTimePicker1
-            // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(889, 3);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(200, 22);
-            this.dateTimePicker1.TabIndex = 6;
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(322, 0);
-            this.button3.Margin = new System.Windows.Forms.Padding(0);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(201, 28);
-            this.button3.TabIndex = 7;
-            this.button3.Text = "Generate Interest Printout";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -253,8 +261,8 @@ namespace HBPP
             this.Name = "MainForm";
             this.Load += new System.EventHandler(this.MainForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.printItemBindingSource)).EndInit();
             this.flowLayoutPanel_Buttons.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.printItemBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -278,6 +286,7 @@ namespace HBPP
         private Button button2;
         private DateTimePicker dateTimePicker1;
         private Button button3;
+        private ToolTip toolTip1;
     }
 }
 

@@ -488,5 +488,10 @@ namespace HBPP
                         ";
             return html;
         }
+
+        private void flowLayoutPanel_Buttons_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }
