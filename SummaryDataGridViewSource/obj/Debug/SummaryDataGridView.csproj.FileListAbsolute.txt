@@ -1,6 +1,0 @@
-D:\Code\Experiments\SummaryDataGridViewSource\bin\Debug\SummaryDataGridView.dll.config
-D:\Code\Experiments\SummaryDataGridViewSource\bin\Debug\SummaryDataGridView.dll
-D:\Code\Experiments\SummaryDataGridViewSource\bin\Debug\SummaryDataGridView.pdb
-D:\Code\Experiments\SummaryDataGridViewSource\obj\Debug\SummaryDataGridView.csprojResolveAssemblyReference.cache
-D:\Code\Experiments\SummaryDataGridViewSource\obj\Debug\SummaryDataGridView.dll
-D:\Code\Experiments\SummaryDataGridViewSource\obj\Debug\SummaryDataGridView.pdb
